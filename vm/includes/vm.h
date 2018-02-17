@@ -6,13 +6,14 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 14:33:07 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 14:44:09 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VM_H
 
 # include "libft.h"
+# include "op.h"
 
 # define OPCODE_OFFSET 56;
 
