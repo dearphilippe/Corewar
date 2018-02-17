@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 14:25:31 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 14:33:07 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 # include "libft.h"
 
-
-
 # define OPCODE_OFFSET 56;
 
 typedef struct  s_reg
 {
-	char        reg[REG_SIZE];
+	char        reg[ REG_SIZE ];
 }               t_reg;
 
 typedef struct  s_process
@@ -36,7 +34,7 @@ typedef struct  s_process
 typedef struct	s_arena
 {
 	int			num_players;
-	char		*arena;
+	char		arena[ MEM_SIZE ];
 }				t_arena;
 
 #endif
