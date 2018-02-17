@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/16 15:48:56 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 14:33:18 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,12 @@ void	init_players(t_arena arena, t_process *players)
 	}
 }
 
-void	init_arena(t_arena *arena)
-{
-	arena->arena = ft_memalloc(sizeof(char) * MEM_SIZE);
-}
-
 int	main(int argc, char **argv)
 {
 	t_process	*players;
 	t_arena		arena;
 
 	arena.num_players = argc - 1; //Change to include options
-	init_arena(&arena);
 	players = ft_memalloc(sizeof(t_process) * arena.num_players);
 	init_players(arena, players);
 	for (int i = 0; i < arena.num_players; ++i)
