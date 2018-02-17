@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 14:33:18 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 15:13:14 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ long long g_reg2 = 0;
 long long g_reg3 = 0;
 int g_imm = 0;
 
-char		*fetch(t_process *player)
+int				get_instruct_len(int pc, t_arena *arena)
+{
+	
+}
+
+char			*fetch(t_process *player)
 {
 	return (player->);
 }
@@ -32,9 +37,9 @@ char		*fetch(t_process *player)
 // 	;
 // }
 
-void	init_players(t_arena arena, t_process *players)
+static void		init_players(t_arena arena, t_process *players)
 {
-	int	i;
+	int			i;
 
 	i = -1;
 	while (++i < arena.num_players)
@@ -44,7 +49,7 @@ void	init_players(t_arena arena, t_process *players)
 	}
 }
 
-int	main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_process	*players;
 	t_arena		arena;
