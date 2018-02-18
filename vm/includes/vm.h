@@ -17,15 +17,10 @@
 
 # define OPCODE_OFFSET 56;
 
-typedef struct  s_reg
-{
-	char        reg[ REG_SIZE ];
-}               t_reg;
-
 typedef struct  s_process
 {
-	void		*pc;
-	t_reg		regs[ REG_NUMBER ];
+	char		*pc;
+	char		regs[ REG_NUMBER ][ REG_SIZE ];
 	int			execute_cycle;
 	int			carry : 1;
 	int			process_num;

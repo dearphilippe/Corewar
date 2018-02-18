@@ -84,8 +84,8 @@ typedef struct	s_op
 	int			op_code;
 	int			num_cycles;
 	char		comment[COMMENT_LENGTH];
-	int			carry_success : 1;
-	int			carry_failure : 1;
+	int			coding_byte : 1;
+	int			truncate : 1;
 }               t_op;
 
 extern t_op    op_tab[17] =
