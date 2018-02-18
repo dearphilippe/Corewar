@@ -9,8 +9,8 @@
                 "/Library/Developer/CommandLineTools/usr/include",
                 "/usr/include",
                 "${workspaceRoot}",
-                "${workspaceRoot}/vm",
-                "${workspaceRoot}/libstar"
+                "${workspaceRoot}/libstar",
+                "${workspaceRoot}/vm/includes"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",

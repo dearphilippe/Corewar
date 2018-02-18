@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 15:13:14 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 19:19:17 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,51 @@ long long g_reg2 = 0;
 long long g_reg3 = 0;
 int g_imm = 0;
 
-int				get_instruct_len(int pc, t_arena *arena)
+
+static int		param_size(char coding_byte, int truncate)
 {
-	
+	int			len;
+
+	len = 0;
+	if ((coding_byte) & 0xFF == REG_CODE)
+		len += 1;
+	else if ((coding_byte) & 0xFF == IND_CODE)
+		len += IND_SIZE;
+	else if ((coding_byte) & 0xFF == DIR_CODE)
+		len += truncate ? 2 : DIR_SIZE;
+	return (len);
 }
 
-char			*fetch(t_process *player)
+/*
+** Returns the Len of the instruction at PC. 0 if not an instruction
+*/
+
+int				get_instruct_len(char *pc, char *arena_start)
 {
-	return (player->);
+	char		coding_byte;
+	int			len;
+
+	len = 0;
+	if (*pc && *pc <= 16)
+	{
+		if (!op_tab[*pc - 1].coding_byte)
+			return (op_tab[*pc - 1].truncate ? 3 : DIR_SIZE + 1);
+		if (pc + 1 - arena_start < MEM_SIZE)
+			coding_byte = *(pc + 1);
+		else
+			coding_byte = *arena_start;
+		len = 2;
+		len += param_size(coding_byte >> 6, op_tab[*pc - 1].truncate);
+		len += param_size(coding_byte >> 4, op_tab[*pc - 1].truncate);
+		len += param_size(coding_byte >> 2, op_tab[*pc - 1].truncate);
+	}
+	return (len);	
 }
+
+// char			*fetch(t_process *player)
+// {
+// 	return (player->);
+// }
 
 // void		decode(char *instruction)
 // {
@@ -44,7 +80,7 @@ static void		init_players(t_arena arena, t_process *players)
 	i = -1;
 	while (++i < arena.num_players)
 	{
-		*((int *)(((players[i]).regs[0]).reg)) = i;
+		*((int *)((players[i]).regs[0])) = i;
 		players[i].pc = (i * (MEM_SIZE / arena.num_players)) + arena.arena;
 	}
 }
