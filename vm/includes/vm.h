@@ -15,22 +15,32 @@
 # include "libft.h"
 # include "op.h"
 
-# define OPCODE_OFFSET 56;
-
-typedef struct  s_process
+typedef struct		s_process
 {
-	char		*pc;
-	char		regs[ REG_NUMBER ][ REG_SIZE ];
-	int			execute_cycle;
-	int			carry : 1;
-	int			process_num;
+	unsigned char	*pc;
+	unsigned char	regs[ REG_NUMBER ][ REG_SIZE ];
+	int				execute_cycle;
+	int				carry : 1;
+	int				process_num;
+}					t_process;
 
-}               t_process;
-
-typedef struct	s_arena
+typedef struct		s_instruction
 {
-	int			num_players;
-	char		arena[ MEM_SIZE ];
-}				t_arena;
+	int				op_code;
+	unsigned char	*pc;
+	unsigned char	*param[ MAX_PARAM ];
+}					t_instruction;
+
+typedef struct		s_arena
+{
+	int				num_players;
+	int				cycle;
+	t_pqueue		*proc_queue;
+	unsigned char	arena[ MEM_SIZE ];
+}					t_arena;
+
+int					comparison(void *ptr1, void *ptr2);
+
+void				process_execution(t_arena *arena, t_process *process);
 
 #endif
