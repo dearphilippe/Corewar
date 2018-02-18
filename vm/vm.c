@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 19:15:06 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 19:19:17 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int				get_instruct_len(char *pc, char *arena_start)
 	return (len);	
 }
 
-char			*fetch(t_process *player)
-{
-	return (player->);
-}
+// char			*fetch(t_process *player)
+// {
+// 	return (player->);
+// }
 
 // void		decode(char *instruction)
 // {
