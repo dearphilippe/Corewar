@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 14:24:25 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 14:32:19 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 17:15:43 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ typedef struct	s_op
 	int			op_code;
 	int			num_cycles;
 	char		comment[COMMENT_LENGTH];
-	int			carry_success : 1;
-	int			carry_failure : 1;
+	int			coding_byte : 1;
+	int			truncate : 1;
 }               t_op;
 
 extern t_op    op_tab[17] =
