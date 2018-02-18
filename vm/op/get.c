@@ -1,41 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vm.h                                               :+:      :+:    :+:   */
+/*   get.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 19:14:31 by passef           ###   ########.fr       */
+/*   Created: 2018/02/17 18:57:45 by passef            #+#    #+#             */
+/*   Updated: 2018/02/17 19:15:14 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VM_H
+#include "vm.h"
 
-# include "libft.h"
-# include "op.h"
-
-# define OPCODE_OFFSET 56;
-
-typedef struct  s_reg
+int        get(t_process *pc)
 {
-	char        reg[ REG_SIZE ];
-}               t_reg;
 
-typedef struct  s_process
-{
-	void		*pc;
-	t_reg		regs[ REG_NUMBER ];
-	int			execute_cycle;
-	int			carry : 1;
-	int			process_num;
-
-}               t_process;
-
-typedef struct	s_arena
-{
-	int			num_players;
-	char		arena[ MEM_SIZE ];
-}				t_arena;
-
-#endif
+}
