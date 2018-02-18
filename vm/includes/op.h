@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 14:24:25 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 17:15:43 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/17 19:31:57 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ typedef struct		header_s
 
 typedef struct	s_op
 {
-	char		op[MAX_OPNAME];
+	char		op[ MAX_OPNAME ];
 	int			num_param;
-	int			param_type[MAX_PARAM];
+	int			param_type[ MAX_PARAM ];
 	int			op_code;
 	int			num_cycles;
-	char		comment[COMMENT_LENGTH];
+	char		comment[ COMMENT_LENGTH ];
 	int			coding_byte : 1;
 	int			truncate : 1;
+	char		*param[ MAX_PARAM ];
 }               t_op;
 
 extern t_op    op_tab[17] =

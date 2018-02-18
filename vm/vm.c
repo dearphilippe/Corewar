@@ -6,72 +6,78 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 19:19:17 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 15:18:16 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include <fcntl.h>
 
-int g_pc = 0;
-int	g_cycle_num = 0;
-int g_opcode = 0;
-long long g_reg1 = 0;
-long long g_reg2 = 0;
-long long g_reg3 = 0;
-int g_imm = 0;
-
-
-static int		param_size(char coding_byte, int truncate)
+static int		is_hex(char c)
 {
-	int			len;
-
-	len = 0;
-	if ((coding_byte) & 0xFF == REG_CODE)
-		len += 1;
-	else if ((coding_byte) & 0xFF == IND_CODE)
-		len += IND_SIZE;
-	else if ((coding_byte) & 0xFF == DIR_CODE)
-		len += truncate ? 2 : DIR_SIZE;
-	return (len);
+	if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') ||
+		(c >= 'a' && c <= 'f'))
+		return (1);
+	return (0);
+}
+static int		hex_val(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (c - '0');
+	if (c >= 'A' && c <= 'F')
+		return (c - 'A' + 10);
+	if (c >= 'a' && c <= 'f')
+		return (c - 'a' + 10);
+	return (0);
 }
 
-/*
-** Returns the Len of the instruction at PC. 0 if not an instruction
-*/
-
-int				get_instruct_len(char *pc, char *arena_start)
+static void		create_bytes(unsigned char *buff, unsigned char *pc)
 {
-	char		coding_byte;
-	int			len;
+	int			i_buff;
+	int			i_pc;
 
-	len = 0;
-	if (*pc && *pc <= 16)
+	i_pc = 0;
+	i_buff = -1;
+	while (buff[++i_buff])
 	{
-		if (!op_tab[*pc - 1].coding_byte)
-			return (op_tab[*pc - 1].truncate ? 3 : DIR_SIZE + 1);
-		if (pc + 1 - arena_start < MEM_SIZE)
-			coding_byte = *(pc + 1);
-		else
-			coding_byte = *arena_start;
-		len = 2;
-		len += param_size(coding_byte >> 6, op_tab[*pc - 1].truncate);
-		len += param_size(coding_byte >> 4, op_tab[*pc - 1].truncate);
-		len += param_size(coding_byte >> 2, op_tab[*pc - 1].truncate);
+		if (is_hex(buff[i_buff]))
+		{
+			pc[i_pc] = ((i_pc % 2 == 0) ? (hex_val(buff[i_buff]) << 4) :
+				pc[i_pc] + hex_val(buff[i_buff]));
+			i_pc++;
+		}
 	}
-	return (len);	
 }
 
-// char			*fetch(t_process *player)
-// {
-// 	return (player->);
-// }
+static void			create_arena(char **argv, t_arena *arena, t_process *p)
+{
+	int				i;
+	int				j;
+	int				k;
+	int				fd;
+	unsigned char	str[ 4 ];
 
-// void		decode(char *instruction)
-// {
-// 	// g_opcode = ((instruction >> OPCODE_OFFSET) & 0xFF);
-// 	// g_reg1 = 
-// 	;
-// }
+	i = -1;
+	while (++i < arena->num_players)
+	{
+		if ((fd = open(argv[i + 1], O_RDONLY)) > 0)
+		{
+			//Validate .cor??
+			lseek(fd, PROG_NAME_LENGTH + COMMENT_LENGTH + 4, SEEK_SET);
+			k = 0;
+			while ((j = read(fd, str, 1)) > 0)
+				// while (j-- > 0)
+					// ft_printf("%d\n", buff[0]);
+				{
+					ft_printf("here\n");
+					*(p[i].pc + (k)) = *str;
+					++k;
+				// create_bytes(str, p[i].pc);
+				}
+			close(fd);
+		}
+	}
+}
 
 static void		init_players(t_arena arena, t_process *players)
 {
@@ -91,12 +97,16 @@ int				main(int argc, char **argv)
 	t_arena		arena;
 
 	arena.num_players = argc - 1; //Change to include options
-	players = ft_memalloc(sizeof(t_process) * arena.num_players);
+	players = ft_memalloc(sizeof(t_process));
 	init_players(arena, players);
-	for (int i = 0; i < arena.num_players; ++i)
+	ft_bzero(arena.arena, MEM_SIZE);
+	create_arena(argv, &arena, players);
+	ft_printf("MEM");
+	for (int i = 0; i < MEM_SIZE; i++)
 	{
-		ft_printf("%d\n", *((int *)((players[i].regs[0]).reg)));
-		ft_printf("pc: %p\n", players[i].pc);		
+		if (i % (MEM_SIZE / 16) == 0)
+			ft_printf("\n");
+		ft_printf("%02x ", arena.arena[i]);
 	}
-	ft_printf("%s\n", argv[0]);
+	ft_printf("\n");
 }
