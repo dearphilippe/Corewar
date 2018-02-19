@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 22:56:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 16:36:42 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 19:35:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@
 
 void				process_execution(t_arena *arena, t_process *process)
 {
-	t_instruction	instruct;
-
-	if (get_instruct(&(process->pc), arena->arena, &instruct))
+	if (get_instruct(&(process->pc), arena->arena, &(process->instruct)))
 	{
 		//execute!! PHILL THIS IS UR MOMENT DONT LET US ALL DOWN
 		;
