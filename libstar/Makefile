@@ -61,6 +61,8 @@ SRC += ft_strsub.c
 SRC += ft_strtrim.c
 SRC += ft_tolower.c
 SRC += ft_toupper.c
+SRC += pqueue.c
+SRC += del_node.c
 
 all: $(NAME)
 
