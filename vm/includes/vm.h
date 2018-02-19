@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 19:34:36 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 19:58:11 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct		s_arena
 	int				cycle;
 	int				cycle_to_die;
 	t_pqueue		*proc_queue;
-	t_player		*players;
+	t_player		players[ MAX_PLAYERS ];
 	int				last_alive;
 	unsigned char	arena[ MEM_SIZE ];
 }					t_arena;

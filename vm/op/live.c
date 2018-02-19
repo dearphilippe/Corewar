@@ -6,29 +6,44 @@
 /*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/02/18 19:20:31 by passef           ###   ########.fr       */
+/*   Updated: 2018/02/18 20:09:55 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int         get_data(t_instruction *ins, t_arena *arena)
+void        print_player_alive(int player_id, t_arena *arena)
 {
-    if (ins->op_code == 1)
-        op_live(ins->param[0], arena);
+    ft_printf("A process shows that player %d %s is alive",
+        arena->players[player_id].player_num, arena->players[player_id].name);
 }
 
-int       get_player_id(int n)
+int         get_data(t_process *proc, t_arena *arena)
 {
-    
+    if (proc->instruct.op_code == 1)
+        op_live(proc, arena);
 }
 
-void    op_live(unsigned char *player_num, t_arena *arena)
+int       get_player_id(int player_num, t_arena *arena)
+{
+    int     player_id;
+
+    player_id = -1;
+    while (++player_id < arena->num_players)
+    {
+        if (player_num == arena->players[player_id].player_num)
+            return (player_id);
+    }
+    return (-1);
+}
+
+void    op_live(t_process *proc, t_arena *arena)
 {
     unsigned char *tmp;
     int             player_id;
 
-    player_id = get_player_id(player_num);
-    pc = arena->players->player_num;
-
+    player_id = get_player_id(proc->instruct.param[0], arena);
+    proc->num_live++;
+    arena->last_alive = proc->player_num;
+    print_player_alive(player_id, arena);
 }
