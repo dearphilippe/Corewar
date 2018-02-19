@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 22:43:54 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 18:20:58 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static int		get_len(char c, t_instruction *instruc, char **pc, char *arena)
 ** Returns the Len of the instruction at PC. 0 if not an instruction
 ** Also will create an instruction to be passed to the executioner
 ** Also increments the Program Counter for the passed in Process
+** PC is a pointer passed by reference so that it can be modified
+** PC is incremented in a way to mimick cirular memory. See line 74
 */
 
 int				get_instruct(char **pc, char *arena, t_instruction *instruc)
