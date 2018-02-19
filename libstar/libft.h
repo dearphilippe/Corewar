@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:23:57 by nkouris           #+#    #+#             */
-/*   Updated: 2018/02/17 23:52:13 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 16:38:45 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 typedef struct		s_dblist
 {
