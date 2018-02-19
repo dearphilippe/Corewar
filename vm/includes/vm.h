@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 19:06:30 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 19:11:53 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,7 @@ int					comparison(void *ptr1, void *ptr2);
 void				process_execution(t_arena *arena, t_process *process);
 
 int					get_exec_cycle(char *pc);
+
+void				print_arena(t_arena arena);
+
 #endif
