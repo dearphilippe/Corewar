@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   live.c                                             :+:      :+:    :+:   */
+/*   del_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/02/18 19:04:42 by passef           ###   ########.fr       */
+/*   Created: 2018/02/18 18:43:36 by satkins           #+#    #+#             */
+/*   Updated: 2018/02/18 18:47:36 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "libft.h"
 
-void    op_live(t_process *pc,  t_arena *arena)
+void	del_node(t_node *node, t_node *prev)
 {
-    unsigned char *tmp;
-
-    t_process->pc;
-
+	if (node)
+	{
+		if (node->next)
+			node->next->previous = node->previous;
+		if (prev)
+			prev->next = node->next;
+		free(node);
+	}
 }

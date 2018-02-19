@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:23:57 by nkouris           #+#    #+#             */
-/*   Updated: 2018/02/18 16:38:45 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 18:48:26 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ void				*ft_depqueue(t_pqueue *queue);
 void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
 	int (*comparer)(void *, void *));
 t_pqueue			*init_pqueue(void);
+void				del_node(t_node *node, t_node *prev);
 	
 #endif
