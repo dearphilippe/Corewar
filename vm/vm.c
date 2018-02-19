@@ -63,7 +63,6 @@ static void		init_players(t_arena *arena, t_process *players)
 		arena->players[i].player_id = i;
 		players[i].pc = (i * (MEM_SIZE / arena->num_players)) + arena->arena;
 	}
-	
 }
 
 int				main(int argc, char **argv)
@@ -77,12 +76,7 @@ int				main(int argc, char **argv)
 	init_players(&arena, players);
 	create_arena(argv, &arena, players);
 	get_inital_instructs(players, &arena);
-	ft_printf("MEM");
-	for (int i = 0; i < MEM_SIZE; i++)
-	{
-		if (i % (MEM_SIZE / 16) == 0)
-			ft_printf("\n");
-		ft_printf("%02x ", arena.arena[i]);
-	}
-	ft_printf("\n");
+	print_arena(arena);
+	start_game(&arena);
+	print_arena(arena);
 }
