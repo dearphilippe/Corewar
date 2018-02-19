@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 19:28:55 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 19:34:36 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_process
 	int				process_num;
 	int				player_num;
 	int				num_live;
+	t_instruction	instruct;
 }					t_process;
 
 typedef struct		s_player
