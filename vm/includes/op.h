@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 14:24:25 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/17 19:31:57 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 15:18:48 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define IND_SIZE				2
 # define REG_SIZE				4
 # define DIR_SIZE				REG_SIZE
-# define MAX_PARAM               3
+# define MAX_PARAM              3
 
 
 # define REG_CODE				1
@@ -25,27 +25,28 @@
 # define IND_CODE				3
 
 
-# define MAX_ARGS_NUMBER			4
-# define MAX_PLAYERS				4
+# define MAX_ARGS_NUMBER		4
+# define MAX_PLAYERS			4 
 # define MEM_SIZE				(4*1024)
-# define IDX_MOD					(MEM_SIZE / 8)
+# define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
 # define COMMENT_CHAR			'#'
 # define LABEL_CHAR				':'
-# define DIRECT_CHAR				'%'
+# define DIRECT_CHAR			'%'
 # define SEPARATOR_CHAR			','
 # define MAX_OPNAME              6
 
-# define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
+# define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
 
-# define NAME_CMD_STRING			".name"
+# define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 
 # define REG_NUMBER				16
 
+
 # define CYCLE_TO_DIE			1536
-# define CYCLE_DELTA				50
+# define CYCLE_DELTA			50
 # define NBR_LIVE				21
 # define MAX_CHECKS				10
 
@@ -74,7 +75,7 @@ typedef struct		header_s
 	char				prog_name[PROG_NAME_LENGTH + 1];
 	unsigned int		prog_size;
 	char				comment[COMMENT_LENGTH + 1];
-}                 header_t;
+}					header_t;
 
 typedef struct	s_op
 {
@@ -97,7 +98,7 @@ extern t_op    op_tab[17] =
 	{"add", 3, {T_REG, T_REG, T_REG}, 4, 10, "addition", 1, 0},
 	{"sub", 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction", 1, 0},
 	{"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6,
-		"et (and  r1, r2, r3   r1&r2 -> r3", 1, 0},
+		"et (and  r1, r2,\r3   r1&r2 -> r3", 1, 0},
 	{"or", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 7, 6,
 		"ou  (or   r1, r2, r3   r1 | r2 -> r3", 1, 0},
 	{"xor", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6,
