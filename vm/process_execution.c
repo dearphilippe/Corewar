@@ -6,18 +6,11 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 22:56:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 00:07:26 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 16:36:42 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-static int			get_exec_cycle(char *pc)
-{
-	if (*pc && *pc <= 16)
-		return (op_tab[*pc].num_cycles);
-	return (1);
-}
 
 /*
 ** This is where we have the process that has an instruction that will execute
