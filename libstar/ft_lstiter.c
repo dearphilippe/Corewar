@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_exec_cycle.c                                   :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: satkins <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 16:35:47 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 12:01:08 by satkins          ###   ########.fr       */
+/*   Created: 2017/10/09 00:37:56 by satkins           #+#    #+#             */
+/*   Updated: 2017/10/10 20:49:54 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "libft.h"
 
-int			get_exec_cycle(unsigned char *pc)
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	if (*pc && *pc <= 16)
-		return (op_tab[*pc].num_cycles);
-	return (1);
+	if (f != NULL)
+	{
+		while (lst)
+		{
+			f(lst);
+			lst = lst->next;
+		}
+	}
 }

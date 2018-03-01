@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 19:11:40 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/28 12:56:14 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void			create_arena(char **argv, t_arena *arena, t_process *p)
 			}
 			close(fd);
 		}
+	arena->num_processes = arena->num_players;
 	arena->proc_queue = init_pqueue();
 }
 
@@ -60,6 +61,7 @@ static void		init_players(t_arena *arena, t_process *players)
 		arena->players[i].num_of_process = 1;
 		*((int *)((players[i]).regs[0])) = i;
 		players[i].player_num = i;
+		players[i].process_num = i;
 		arena->players[i].player_id = i;
 		players[i].pc = (i * (MEM_SIZE / arena->num_players)) + arena->arena;
 	}
@@ -76,7 +78,7 @@ int				main(int argc, char **argv)
 	init_players(&arena, players);
 	create_arena(argv, &arena, players);
 	get_inital_instructs(players, &arena);
-	print_arena(arena);
+	print_arena(&arena);
 	start_game(&arena);
-	print_arena(arena);
+	print_arena(&arena);
 }

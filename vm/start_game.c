@@ -6,11 +6,17 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 19:04:05 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/28 13:05:32 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+/*
+** count_live will count the total number of lives called in this cycle
+** this will also remove and kill any process that did not call live
+** this will also decrement the number of processes each player has
+*/
 
 static int		count_live(t_arena *arena)
 {
@@ -32,15 +38,17 @@ static int		count_live(t_arena *arena)
 			arena->players[proc->player_num].num_of_process--;
 			free(proc);
 		}
+		else
+			proc->num_live = 0;
 		prev = node;
 		node = node->next;
 	}
-	return (count_live);
+	return (live_count);
 }
 
 static void		die_check(t_arena *arena)
 {
-	static		checkups = 0;
+	static int	checkups = 0;
 
 	if (count_live(arena) >= NBR_LIVE || ++checkups == MAX_CHECKS)
 	{
@@ -83,7 +91,8 @@ void			start_game(t_arena *arena)
 			process = arena->proc_queue->first->content; 
 		}
 		++arena->cycle;
-		if (arena->cycle % CYCLE_TO_DIE == 0)
+		if (arena->cycle % arena->cycle_to_die == 0)
 			die_check(arena);
 	}
+	ft_printf("here\n");
 }

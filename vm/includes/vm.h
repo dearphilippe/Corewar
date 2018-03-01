@@ -6,11 +6,13 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 20:09:26 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/28 12:56:25 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VM_H
+
+# define VM_H
 
 # include "libft.h"
 # include "op.h"
@@ -20,7 +22,7 @@ typedef struct		s_instruction
 	int				op_code;
 	unsigned char	*pc;
 	unsigned char	*param[ MAX_PARAM ];
-	int				param_size[ MAX_PARAM ];
+	int				p_s[ MAX_PARAM ];
 }					t_instruction;
 
 typedef struct		s_process
@@ -52,6 +54,7 @@ typedef struct		s_arena
 	t_pqueue		*proc_queue;
 	t_player		*players;
 	int				last_alive;
+	int				num_processes;
 	unsigned char	arena[ MEM_SIZE ];
 }					t_arena;
 
@@ -59,8 +62,13 @@ int					comparison(void *ptr1, void *ptr2);
 
 void				process_execution(t_arena *arena, t_process *process);
 
-int					get_exec_cycle(char *pc);
+int					get_exec_cycle(unsigned char *pc);
 
-void				print_arena(t_arena arena);
+void				print_arena(t_arena *arena);
 
+void			start_game(t_arena *arena);
+
+int				get_instruct(unsigned char **pc, unsigned char *a,
+	t_instruction *in);
+	
 #endif

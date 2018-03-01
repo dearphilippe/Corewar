@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_exec_cycle.c                                   :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 16:35:47 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 12:01:08 by satkins          ###   ########.fr       */
+/*   Created: 2017/10/09 00:37:13 by satkins           #+#    #+#             */
+/*   Updated: 2018/02/28 11:54:18 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "libft.h"
 
-int			get_exec_cycle(unsigned char *pc)
+void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 {
-	if (*pc && *pc <= 16)
-		return (op_tab[*pc].num_cycles);
-	return (1);
+	if (del != NULL && alst != NULL)
+	{
+		del((**alst).content, (**alst).content_size);
+		free(*alst);
+		*alst = NULL;
+	}
 }

@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_exec_cycle.c                                   :+:      :+:    :+:   */
+/*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: satkins <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 16:35:47 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 12:01:08 by satkins          ###   ########.fr       */
+/*   Created: 2017/10/09 00:37:40 by satkins           #+#    #+#             */
+/*   Updated: 2017/10/09 22:20:00 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "libft.h"
 
-int			get_exec_cycle(unsigned char *pc)
+void	ft_lstadd(t_list **alst, t_list *new)
 {
-	if (*pc && *pc <= 16)
-		return (op_tab[*pc].num_cycles);
-	return (1);
+	if (new)
+	{
+		new->next = *alst;
+		*alst = new;
+	}
 }
