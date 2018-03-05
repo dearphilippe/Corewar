@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 16:58:13 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 22:31:05 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,8 @@ void				start_game(t_arena *arena);
 
 int					get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in);
+
+void	op_control(t_arena *arena, t_process *proc);
+	
 
 #endif

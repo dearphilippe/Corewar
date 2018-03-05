@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 13:05:32 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 22:34:08 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ void			start_game(t_arena *arena)
 		if (arena->cycle % arena->cycle_to_die == 0)
 			die_check(arena);
 	}
-	ft_printf("here\n");
+	ft_printf("Player %d has won! Glory\n", arena->last_alive);
 }

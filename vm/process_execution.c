@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 22:56:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 19:35:38 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 22:30:51 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void				process_execution(t_arena *arena, t_process *process)
 {
 	if (get_instruct(&(process->pc), arena->arena, &(process->instruct)))
 	{
-		//execute!! PHILL THIS IS UR MOMENT DONT LET US ALL DOWN
-		;
+		op_control(arena, process);
 	}
 	process->execute_cycle = get_exec_cycle(process->pc) + arena->cycle + 1;
 	ft_enpqueue(arena->proc_queue, process, sizeof(t_process), comparison);

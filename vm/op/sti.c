@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 13:10:46 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 21:24:57 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 22:34:15 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ void				sti(t_arena *arena, t_process *proc)
 	dist = (par[1] + par[2]) % IDX_MOD;
 	addr = proc->instruct.pc;
 	i = -1;
-	while (++i < dist)
-		addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
+	while (++i < ABS(dist))
+		if (dist > 0)
+			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
+		else
+			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE;			
 	i = -1;
 	while (++i < REG_SIZE)
 	{
@@ -38,4 +41,5 @@ void				sti(t_arena *arena, t_process *proc)
 		addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 	}
 	free(par);
+	ft_printf("player %d calls sti\n", proc->player_num);
 }
