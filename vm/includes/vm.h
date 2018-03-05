@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 12:56:25 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 16:58:13 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef struct		s_instruction
 {
 	int				op_code;
+	unsigned char	coding_byte;
 	unsigned char	*pc;
 	unsigned char	*param[ MAX_PARAM ];
 	int				p_s[ MAX_PARAM ];
@@ -66,9 +67,9 @@ int					get_exec_cycle(unsigned char *pc);
 
 void				print_arena(t_arena *arena);
 
-void			start_game(t_arena *arena);
+void				start_game(t_arena *arena);
 
-int				get_instruct(unsigned char **pc, unsigned char *a,
+int					get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in);
-	
+
 #endif

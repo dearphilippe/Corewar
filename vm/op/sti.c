@@ -6,38 +6,36 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 13:10:46 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 14:11:51 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 21:24:57 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "parameters.h"
 
-int		read_param(int size, unsigned char *addr, t_arena *arena)
+void				sti(t_arena *arena, t_process *proc)
 {
-	int	ret;
-	int	i;
+	int				*par;
+	int				dist;
+	int				i;
+	unsigned char	*addr;
 
-	ret = 0;
-	i = -1;
-	while (++i < size)
+	par = read_param(proc, arena);
+	if (proc->pc == proc->instruct.coding_byte)
 	{
-		ret << 8;
-		ret += *addr;
-		addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
-	}
-	return (ret);
-}
-
-void	sti(t_arena *arena, t_process *process)
-{
-	int	params[3];
-
-	params[0] = *process->instruct.param[0];
-	if (params[0] > REG_NUMBER || params[0] <= 0)
-	{
-		invalid_param(process);
+		free(par);
 		return ;
 	}
-	params[0] = process->regs[params[0]];
-
+	dist = (par[1] + par[2]) % IDX_MOD;
+	addr = proc->instruct.pc;
+	i = -1;
+	while (++i < dist)
+		addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
+	i = -1;
+	while (++i < REG_SIZE)
+	{
+		*addr = par[0] >> (28 - (i * 4));
+		addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
+	}
+	free(par);
 }
