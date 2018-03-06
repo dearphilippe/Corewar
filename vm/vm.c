@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/05 19:29:02 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 05:21:11 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void			create_arena(char **argv, t_arena *arena, t_process *p)
 static void		init_players(t_arena *arena, t_process *players)
 {
 	int			i;
+	int			k;
 
 	arena->players = ft_memalloc(sizeof(t_player) * arena->num_players);
 	i = -1;
@@ -61,8 +62,11 @@ static void		init_players(t_arena *arena, t_process *players)
 	{
 		arena->players[i].num_of_process = 1;
 		arena->players[i].player_num = i;
-		*((int *)((players[i]).regs[0])) = i;
-		players[i].player_num = i;
+		players[i].player_num = -(i + 1);
+		*((int *)((players[i]).regs[0])) = players[i].player_num;
+		k = 0;
+		while (++k < REG_NUMBER)
+			*((int *)((players[i]).regs[k])) = 0;
 		players[i].process_num = i;
 		arena->players[i].player_id = i;
 		players[i].pc = (i * (MEM_SIZE / arena->num_players)) + arena->arena;
@@ -81,6 +85,7 @@ int				main(int argc, char **argv)
 	create_arena(argv, &arena, players);
 	get_inital_instructs(players, &arena);
 	print_arena(&arena);
+	// ft_printf("start cycle %d %d\n",((t_process *)arena.proc_queue->first->content)->execute_cycle, ((t_process *)arena.proc_queue->first->next->content)->execute_cycle);
 	start_game(&arena);
 	print_arena(&arena);
 }

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 17:08:06 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/05 17:13:07 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 02:55:30 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int					*read_param(t_process *proc, t_arena *arena)
 			ret[k] += *addr;
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		}
+		if (proc->instruct.p_s[k] == 2 && (ret[k] & 0x8000))
+			ret[k] = (ret[k] | 0xFFFF0000);
 		hold = (proc->instruct.coding_byte >> ((3 - k) * 2)) & 0x3;
 		ret[k] = get_value[hold] (ret[k], proc, arena);
 	}

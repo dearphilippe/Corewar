@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:30:27 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/05 19:47:26 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 02:48:07 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void			make_proc(t_arena *arena, t_process *process,
 	ft_enpqueue(arena->proc_queue, &proc_child, sizeof(t_process), comparison);
 }
 
-void	fork(t_arena *arena, t_process *process)
+void	op_fork(t_arena *arena, t_process *process)
 {
 	unsigned char	param [ 2 ];
 	int				i;
@@ -44,10 +44,11 @@ void	fork(t_arena *arena, t_process *process)
 	*((short *)param) = *((short *)param) % IDX_MOD;
 	addr = process->instruct.pc;
 	i = -1;
-	while (++i < abs(*((short *)param)))
+	while (++i < abs((*((short *)param))))
 		if (*((short *)param) > 0)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
 			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE;
 	make_proc(arena, process, addr);
+	ft_printf("Player %d calls fork", process->player_num);
 }

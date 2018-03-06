@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 14:24:25 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 12:19:48 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 03:52:21 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct	s_op
 	char		comment[ COMMENT_LENGTH ];
 	int			coding_byte : 1;
 	int			tr : 1;
-	char		*param[ MAX_PARAM ];
 }               t_op;
 
 extern t_op    op_tab[17];

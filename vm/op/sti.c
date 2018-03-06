@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 13:10:46 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 22:48:16 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 05:32:54 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void				sti(t_arena *arena, t_process *proc)
 {
 	int				*par;
 	int				dist;
+	int				reg;
 	int				i;
 	unsigned char	*addr;
 
@@ -26,20 +27,22 @@ void				sti(t_arena *arena, t_process *proc)
 		free(par);
 		return ;
 	}
+	reg = *proc->instruct.param[0];
 	dist = (par[1] + par[2]) % IDX_MOD;
 	addr = proc->instruct.pc;
 	i = -1;
-	while (++i < ABS(dist))
+	while (++i < abs(dist))
 		if (dist > 0)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
 			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE;			
-	i = -1;
-	while (++i < REG_SIZE)
+	ft_printf("p %1d | sti r%d %d %d\n", proc->player_num, reg, par[1], par[2]);
+	ft_printf("    | with pc and mod (%d)\n", dist + proc->instruct.pc - arena->arena);
+	i = REG_SIZE;
+	while (--i >= 0)
 	{
-		*addr = par[0] >> (28 - (i * 4));
+		*addr = proc->regs[reg - 1][i];
 		addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 	}
 	free(par);
-	ft_printf("player %d calls sti\n", proc->player_num);
 }

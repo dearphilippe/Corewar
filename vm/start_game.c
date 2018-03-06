@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/05 17:19:59 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 05:33:58 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,17 @@ static int		count_live(t_arena *arena)
 		live_count += proc->num_live;
 		if (!proc->num_live)
 		{
-			del_node(node, prev);
+			if (prev)
+				prev->next = node->next;
+			else
+				arena->proc_queue->first = node->next;
 			node = NULL;
 			arena->players[proc->player_num].num_of_process--;
 			free(proc);
 		}
 		else
 			proc->num_live = 0;
-		prev = node;
+		prev = node ? node : prev;
 		node = next;
 	}
 	return (live_count);
@@ -57,10 +60,11 @@ static void		die_check(t_arena *arena)
 	{
 		checkups = 0;
 		arena->cycle_to_die -= CYCLE_DELTA;
+		ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 	}
 }
 
-static int		check_multiple_players(t_player *players, int num_players)
+static int		check_players(t_player *players, int num_players)
 {
 	int			i;
 	int			first_flag;
@@ -84,7 +88,7 @@ void			start_game(t_arena *arena)
 
 	arena->cycle = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;
-	while (check_multiple_players(arena->players, arena->num_players))
+	while (arena->proc_queue->first)
 	{
 		process = arena->proc_queue->first->content;
 		while (process->execute_cycle == arena->cycle)
@@ -98,6 +102,13 @@ void			start_game(t_arena *arena)
 		{
 			die_check(arena);
 		}
+		ft_printf("It is now cycle %d\n", arena->cycle);
+		// if (arena->cycle == 200)
+		// {
+		// 	ft_printf("reg2 %x\n", *(int *)((t_process *)arena->proc_queue->first->content)->regs[1]);
+		//  break ;
+		// }
 	}
-	ft_printf("Player %d has won! Glory\n", arena->last_alive);
+	ft_printf("Player %d has won! Glory\n", arena->players[arena->last_alive].player_num);
+	ft_printf("Cycle finished at: %d\n", arena->cycle);
 }

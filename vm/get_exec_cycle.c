@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:35:47 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 12:01:08 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 01:07:51 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int			get_exec_cycle(unsigned char *pc)
 {
 	if (*pc && *pc <= 16)
-		return (op_tab[*pc].num_cycles);
-	return (1);
+		return (op_tab[*pc - 1].num_cycles);
+	return (0);
 }

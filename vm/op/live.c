@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/03/05 19:23:25 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 04:29:41 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ void    op_live(t_process *process,  t_arena *arena)
 		if (arena->players[i].player_num == player_num)
 		{
 			arena->last_alive = player_num;
-			// ft_printf("A process shows that player %d %s is alive\n",
-			// 	arena->players[i].player_num, arena->players[i].name);
+			ft_printf("A process shows that player %d \"%s\" is alive\n",
+				arena->players[i].player_num, arena->players[i].name);
 		}
 	}
 	process->num_live++;
+	ft_printf("p %d | live %d\n", process->player_num, player_num);	
 }
