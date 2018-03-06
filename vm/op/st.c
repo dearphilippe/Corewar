@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 21:50:29 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 22:34:27 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/05 18:05:27 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	st(t_arena *arena, t_process *process)
 	unsigned char	*addr;
 
 	params = read_param(process, arena);
-	if (process->pc == process->instruct.coding_byte)
+	if (process->instruct.illegal)
 	{
 		free(params);
 		return ;
@@ -29,7 +29,7 @@ void	st(t_arena *arena, t_process *process)
 	addr = process->instruct.pc;
 	dist = params[1] % IDX_MOD;
 	i = -1;
-	while (++i < ABS(dist))
+	while (++i < abs(dist))
 		if (dist > 0)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
@@ -37,9 +37,9 @@ void	st(t_arena *arena, t_process *process)
 	i = -1;
 	while (++i < REG_SIZE)
 	{
-		*addr = par[0] >> (28 - (i * 4));
+		*addr = params[0] >> (24 - (i * 8));
 		addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 	}
-	free(par);
-	ft_printf("player %d calls st\n", proc->player_num);
+	free(params);
+	ft_printf("player %d calls st\n", process->player_num);
 }

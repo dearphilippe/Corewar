@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 19:10:33 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 13:12:48 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/05 14:49:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,6 @@ void			print_arena(t_arena *arena)
 	{
 		if (i % (MEM_SIZE / 128) == 0)
 			ft_printf("\n");
-		node = arena->proc_queue->first;
-		while (node)
-		{
-			proc = node->content;
-			if (proc->pc == &(arena->arena[i]))
-			{
-				ft_printf("\033[1;35m");
-				break ;
-			}
-			node = node->next;
-		}
 		ft_printf("%02x\033[0m ", arena->arena[i]);
 	}
 	ft_printf("\n");

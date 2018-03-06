@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 17:01:59 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 19:41:25 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/05 17:48:32 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int get_ind_val(int num, t_process *proc, t_arena *arena)
 	i = -1;
 	while (++i < REG_SIZE)
 	{
-		ret << 8;
+		ret = ret << 8;
 		ret += *ptr;
 		ptr = ptr + 1 - arena->arena < MEM_SIZE ? ptr + 1 : arena->arena;
 	}

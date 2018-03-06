@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 22:31:05 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/05 19:00:39 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct		s_instruction
 	unsigned char	*pc;
 	unsigned char	*param[ MAX_PARAM ];
 	int				p_s[ MAX_PARAM ];
+	int				illegal : 1;
 }					t_instruction;
 
 typedef struct		s_process

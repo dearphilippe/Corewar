@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 13:10:46 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 22:34:15 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 22:48:16 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void				sti(t_arena *arena, t_process *proc)
 	unsigned char	*addr;
 
 	par = read_param(proc, arena);
-	if (proc->pc == proc->instruct.coding_byte)
+	if (proc->instruct.illegal)
 	{
 		free(par);
 		return ;

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 22:34:08 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/05 17:19:59 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,27 @@ static int		count_live(t_arena *arena)
 	t_node		*prev;
 	t_process	*proc;
 	int			live_count;
+	t_node		*next;
 
 	live_count = 0;
 	node = arena->proc_queue->first;
 	prev = NULL;
 	while (node)
 	{
+		next = node->next;
 		proc = node->content;
 		live_count += proc->num_live;
 		if (!proc->num_live)
 		{
 			del_node(node, prev);
+			node = NULL;
 			arena->players[proc->player_num].num_of_process--;
 			free(proc);
 		}
 		else
 			proc->num_live = 0;
 		prev = node;
-		node = node->next;
+		node = next;
 	}
 	return (live_count);
 }
@@ -88,11 +91,13 @@ void			start_game(t_arena *arena)
 		{
 			ft_depqueue(arena->proc_queue);
 			process_execution(arena, process);
-			process = arena->proc_queue->first->content; 
+			process = arena->proc_queue->first->content;
 		}
 		++arena->cycle;
 		if (arena->cycle % arena->cycle_to_die == 0)
+		{
 			die_check(arena);
+		}
 	}
 	ft_printf("Player %d has won! Glory\n", arena->last_alive);
 }

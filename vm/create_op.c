@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 14:54:23 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/04 23:23:57 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ static int get_len(unsigned char c, t_instruction *instruc,
 		instruc->param[1] = *pc;
 		instruc->p_s[1] = p_size(c >> 4, op_tab[instruc->op_code - 1].tr);
 		len += instruc->p_s[1];
-		while (++i < len)
+		while (++i < len + 1)
 			*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
 		if (op_tab[instruc->op_code - 1].num_param > 2)
 		{
 			instruc->param[2] = *pc;
 			instruc->p_s[2] = p_size(c >> 2, op_tab[instruc->op_code - 1].tr);
 			len += instruc->p_s[2];
-			while (++i < len)
+			while (++i < len + 2)
 				*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
 		}
 	}

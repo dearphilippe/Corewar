@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/28 12:56:14 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/05 19:29:02 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void			create_arena(char **argv, t_arena *arena, t_process *p)
 		}
 	arena->num_processes = arena->num_players;
 	arena->proc_queue = init_pqueue();
+	arena->last_alive = 0;
 }
 
 static void		init_players(t_arena *arena, t_process *players)
@@ -59,6 +60,7 @@ static void		init_players(t_arena *arena, t_process *players)
 	while (++i < arena->num_players)
 	{
 		arena->players[i].num_of_process = 1;
+		arena->players[i].player_num = i;
 		*((int *)((players[i]).regs[0])) = i;
 		players[i].player_num = i;
 		players[i].process_num = i;
