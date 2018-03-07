@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_exec_cycle.c                                   :+:      :+:    :+:   */
+/*   ft_lstappend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: satkins <satkins@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 16:35:47 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 01:07:51 by satkins          ###   ########.fr       */
+/*   Created: 2018/01/09 18:08:15 by satkins           #+#    #+#             */
+/*   Updated: 2018/01/09 18:08:18 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "libft.h"
 
-int			get_exec_cycle(unsigned char *pc)
+void	ft_lstappend(t_list **head, t_list *new)
 {
-	if (*pc && *pc <= 16)
-		return (op_tab[*pc - 1].num_cycles);
-	return (0);
+	t_list	*tmp;
+
+	tmp = *head;
+	if (!(*head))
+		*head = new;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
 }

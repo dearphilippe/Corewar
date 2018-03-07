@@ -1,17 +1,17 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "(lldb) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceRoot}/assembler/a.out",
-            "args": ["assembler/ex.s"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb"
-        }
-    ]
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "(lldb) Launch",
+				"type": "cppdbg",
+				"request": "launch",
+				"program": "${workspaceRoot}/vm/a.out",
+				"args": ["~/Documents/dev/corewar/vm_champs/champs/ex.cor", "~/Documents/dev/corewar/vm_champs/champs/jumper.cor"],
+				"stopAtEntry": false,
+				"cwd": "${workspaceRoot}",
+				"environment": [],
+				"externalConsole": false,
+				"MIMode": "lldb"
+			}
+		]
 }

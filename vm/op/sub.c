@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_arena.c                                      :+:      :+:    :+:   */
+/*   sub.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/18 19:10:33 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 03:27:36 by satkins          ###   ########.fr       */
+/*   Created: 2018/03/06 23:23:09 by satkins           #+#    #+#             */
+/*   Updated: 2018/03/06 23:28:30 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "parameters.h"
 
-void			print_arena(t_arena *arena)
+void	sub(t_arena *arena, t_process *process)
 {
-	int				i;
-	t_node			*node;
-	t_process		*proc;
+	int	*params;
 
-	ft_printf("MEM");
-	i = -1;
-	while (++i < MEM_SIZE)
+	params = read_param(process, arena);
+	if (process->instruct.illegal)
 	{
-		if (i % 64 == 0)
-			ft_printf("\n");
-		node = arena->proc_queue->first;
-		while (node)
-		{
-			proc = node->content;
-			if (proc->pc == &(arena->arena[i]))
-			{
-				ft_printf("\033[1;44m");
-				break ;
-			}
-			node = node->next;
-		}
-		ft_printf("%02x\033[0m ", arena->arena[i]);
+		free(params);
+		return ;
 	}
-	ft_printf("\n");
+	*(int *)process->regs[*process->instruct.param[2]] = params[0] - params[1];
+	ft_printf("p %d | sub r%d r%d r%d\n", process->process_num,
+		*process->instruct.param[0], *process->instruct.param[1],
+		*process->instruct.param[2]);
+	free(params);
 }

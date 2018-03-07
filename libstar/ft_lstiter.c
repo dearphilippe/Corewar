@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get.c                                              :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: satkins <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/17 18:57:45 by passef            #+#    #+#             */
-/*   Updated: 2018/02/17 19:15:14 by passef           ###   ########.fr       */
+/*   Created: 2017/10/09 00:37:56 by satkins           #+#    #+#             */
+/*   Updated: 2017/10/10 20:49:54 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "libft.h"
 
-int        get(t_process *pc)
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-
+	if (f != NULL)
+	{
+		while (lst)
+		{
+			f(lst);
+			lst = lst->next;
+		}
+	}
 }
