@@ -10,31 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "op.h"
+#include "assembler.h"
 
-void	read_sfile()
+char	*read_sfile(char *path)
 {
-}
+	int		fd;
+	char	*content;
 
-void	usage_warning()
-{
-	ft_printf("Usage: ./asm [file ...]\n");
-	errno = USAGE_ERR;
-	exit (errno);
+	//printf("Path:%s\n", path);
+	if ((fd = open(path, O_RDONLY, S_IRUSR)) < 0)
+		err_usage_warning(path);
+	content = ft_read_alloc(fd);
+	if (content == NULL)
+		err_usage_warning(path);
+	return (content);
 }
 
 int		main(int argc, char **argv)
 {
+	char	*content;
+
 	if (argc == 1)
-		usage_warning();
-	read_sfile();
-	lexicheck();
-	syntcheck();
-	paramcheck();
-	labelcheck();
-	printerrors();
-	convertokens();
-	write_cor();
+		err_usage_warning(NULL);
+	content = read_sfile(argv[argc - 1]);
+	lexi_check(content);
+	syntcheck(content);
+	paramcheck(content);
+//	labelcheck();
+//	printerrors();
+//	convertokens();
+//	write_cor();
+printf("is all gud\n");
 	return (0);
 }
+
+
+//	errno = USAGE_ERR;
+//	exit (errno);

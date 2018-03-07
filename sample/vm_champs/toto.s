@@ -1,20 +1,20 @@
-#
+
 # Warrior qui a gagne
 # l'annee derniere
 #     VOALA
 #
-.name		"Celebration Funebre v0.99pl42"
-.comment	"Jour J"
+.name	"Celebration Funebre v0.99pl42"
+.comment "Jour J"
 
 		ld   %0,r3		
-label:		zjmp %:avantdebt
+label:  zjmp %:avantdebt
 		zjmp %0				# pour eviter ecrasement
 						# de l'instruction suivante
 code:		live %42			# 5
 		sti  r15,%0,r14			# 6
 		zjmp %-200			# 3
 		live %42			# 5
-		sti  r15,%0,r14			# 6
+		sti r15,%0,r14			# 6
 		zjmp %-200			# 3
 		live %42			# 5
 		sti  r15,%0,r14			# 6
@@ -22,7 +22,7 @@ code:		live %42			# 5
 		live %42			# 5
 		sti  r15,%0,r14			# 6
 		zjmp %-200			# 3
-		sti  r15,%0,r14			# 6
+		sti r15,%0,r14			# 6
 		zjmp %-200			# 3
 		sti  r15,%0,r14			# 6
 		zjmp %-200
@@ -37,7 +37,7 @@ init:		ld   %393216,r4		 	#7
 		ld   %917504,r12		#7	
 		ld   %1,r11			#7
 		ld   %6,r10			#7
-debt:		live %42			#5
+debt:	live %42			#5
 		sti  r4,%:label,%1		#7
 		add  r4,r12,r4			#5	
 		sub  r10,r11,r10		#5

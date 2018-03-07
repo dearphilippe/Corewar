@@ -5,7 +5,7 @@
 label:		zjmp %:avantdebut
 		zjmp %0				# pour eviter ecrasement
 						# de l'instruction suivante
-code:		live %42			# 5
+code:		live %42,r42			# 5
 		sti  r15,%0,r14			# 6
 		zjmp %-200			# 3
 		live %42			# 5
@@ -24,7 +24,7 @@ code:		live %42			# 5
 	
 avantdebut:	sti   r1,%:code,%1  # 		#7	
 		sti   r1,%:code,%15 # 		#7	
-		sti   r1,%:code,%29 # 		#7	
+		sti   r1,%:co9de,%29 # 		#7	
 		sti   r1,%:code,%43 # 		#7	
 		sti   r1,%:code,%57 # 		#7	
 		sti   r1,%:code,%71 # 		#7	
