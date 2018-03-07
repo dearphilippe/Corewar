@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 09:25:41 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 22:56:48 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void			get_inital_instructs(t_process *p, t_arena *arena)
 	while (++i < arena->num_players)
 	{
 		p[i].execute_cycle = get_exec_cycle(p[i].pc);
+		p[i].instruct.op_code = *p[i].pc;
 		ft_enpqueue(arena->proc_queue, &(p[i]), sizeof(t_process), comparison);
 	}
 	free(p);

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/05 19:00:39 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 19:30:50 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_arena
 	int				num_players;
 	int				cycle;
 	int				cycle_to_die;
+	int				next_check;
 	t_pqueue		*proc_queue;
 	t_player		*players;
 	int				last_alive;

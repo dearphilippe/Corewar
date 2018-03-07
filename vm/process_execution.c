@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 22:56:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 03:10:34 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 11:52:19 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,20 @@
 
 void				process_execution(t_arena *arena, t_process *process)
 {
+	int				cycle;
+
 	if (get_instruct(&(process->pc), arena->arena, &(process->instruct)))
 	{
 		op_control(arena, process);
 	}
-	process->execute_cycle = get_exec_cycle(process->pc) + arena->cycle;
+	cycle = get_exec_cycle(process->pc);
+	cycle = cycle ? cycle : 1;
+	process->execute_cycle = cycle + arena->cycle;
+	ft_bzero(&(process->instruct), sizeof(t_instruction));
+	process->instruct.op_code = *process->pc;
 	ft_enpqueue(arena->proc_queue, process, sizeof(t_process), comparison);
 	free(process);
 	// ft_printf("Cycle: %d\n", arena->cycle);
-	// // print_arena(arena);
-	// // sleep(1);
+	// print_arena(arena);
+	// sleep(1);
 }

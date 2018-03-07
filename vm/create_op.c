@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/04 23:23:57 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 22:58:40 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static int	check_coding_byte(unsigned char coding_byte, t_instruction *instruc)
 	int		i;
 
 	i = MAX_PARAM;
-	if ((coding_byte & 0x3) != 0)
-		return (0);
 	coding_byte = coding_byte >> 2;
 	while (--i >= 0)
 	{
@@ -33,9 +31,6 @@ static int	check_coding_byte(unsigned char coding_byte, t_instruction *instruc)
 			return (0);
 		else if ((coding_byte & 0x3) == 0 &&
 			op_tab[instruc->op_code - 1].param_type[i] != 0)
-			return (0);
-		else if ((coding_byte & 0x3) != 0 &&
-			op_tab[instruc->op_code - 1].param_type[i] == 0)
 			return (0);
 		coding_byte = coding_byte >> 2;
 	}
@@ -112,11 +107,9 @@ int get_instruct(unsigned char **pc, unsigned char *a,
 	int len;
 
 	len = 0;
-	ft_bzero(in, sizeof(t_instruction));
-	if (**pc && **pc <= 16)
+	if (in->op_code > 0 && in->op_code <= 16)
 	{
 		in->pc = *pc;
-		in->op_code = **pc;
 		*pc = (*pc + 1 - a < MEM_SIZE) ? *pc + 1 : a;
 		if (!op_tab[in->op_code - 1].coding_byte)
 		{

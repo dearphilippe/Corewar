@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 13:10:46 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 09:30:25 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 20:00:14 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void				sti(t_arena *arena, t_process *proc)
 		if (dist > 0)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
-			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE;			
+			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;			
 	ft_printf("p %1d | sti r%d %d %d\n", proc->process_num, reg, par[1], par[2]);
 	ft_printf("    | with pc and mod (%d)\n", dist + proc->instruct.pc - arena->arena);
 	i = REG_SIZE;

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 21:25:18 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 09:29:09 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 20:03:35 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void				ldi(t_arena *arena, t_process *process)
 		if (dist > 0)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
-			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE;
+			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;
 	ft_printf("p %d | ldi %d %d r%d\n", process->process_num, params[0], params[1], *process->instruct.param[2]);	
 	free(params);
 	read_mem(arena, process, addr);

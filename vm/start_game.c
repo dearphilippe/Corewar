@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 19:00:24 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 12:03:23 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ static int		count_live(t_arena *arena)
 		next = node->next;
 		proc = node->content;
 		live_count += proc->num_live;
-		if (!proc->num_live)
+		if (!proc->num_live || arena->cycle_to_die <= 0)
 		{
+			ft_printf("Process %d hasn't lived for %d cycles\n",
+				proc->process_num, arena->cycle_to_die);
 			if (prev)
 				prev->next = node->next;
 			else
@@ -62,24 +64,7 @@ static void		die_check(t_arena *arena)
 		arena->cycle_to_die -= CYCLE_DELTA;
 		ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 	}
-}
-
-static int		check_players(t_player *players, int num_players)
-{
-	int			i;
-	int			first_flag;
-
-	first_flag = 0;
-	i = -1;
-	while (++i < num_players)
-		if (players[i].num_of_process > 0)
-		{
-			if (first_flag)
-				return (1);
-			else
-				first_flag = 1;
-		}
-	return (0);
+	arena->next_check = arena->cycle + arena->cycle_to_die;
 }
 
 void			start_game(t_arena *arena)
@@ -88,6 +73,7 @@ void			start_game(t_arena *arena)
 
 	arena->cycle = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;
+	arena->next_check = CYCLE_TO_DIE;
 	while (arena->proc_queue->first)
 	{
 		process = arena->proc_queue->first->content;
@@ -97,14 +83,12 @@ void			start_game(t_arena *arena)
 			process_execution(arena, process);
 			process = arena->proc_queue->first->content;
 		}
-		++arena->cycle;
-		if (arena->cycle % arena->cycle_to_die == 0)
-		{
+		if (arena->cycle >= arena->next_check)
 			die_check(arena);
-		}
-		ft_printf("It is now cycle %d\n", arena->cycle);
-		if (arena->cycle == 1650)
+		if (arena->cycle == 181)
 		 	break ;
+		++arena->cycle;
+		ft_printf("It is now cycle %d\n", arena->cycle);
 	}
 	ft_printf("Player %d has won! Glory\n", arena->last_alive);
 	ft_printf("Cycle finished at: %d\n", arena->cycle);
