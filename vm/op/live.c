@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/03/06 04:29:41 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 09:28:35 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void    op_live(t_process *process,  t_arena *arena)
 		}
 	}
 	process->num_live++;
-	ft_printf("p %d | live %d\n", process->player_num, player_num);	
+	ft_printf("p %d | live %d\n", process->process_num, player_num);	
 }

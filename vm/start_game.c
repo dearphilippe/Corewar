@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 05:33:58 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 19:00:24 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,9 @@ void			start_game(t_arena *arena)
 			die_check(arena);
 		}
 		ft_printf("It is now cycle %d\n", arena->cycle);
-		// if (arena->cycle == 200)
-		// {
-		// 	ft_printf("reg2 %x\n", *(int *)((t_process *)arena->proc_queue->first->content)->regs[1]);
-		//  break ;
-		// }
+		if (arena->cycle == 1650)
+		 	break ;
 	}
-	ft_printf("Player %d has won! Glory\n", arena->players[arena->last_alive].player_num);
+	ft_printf("Player %d has won! Glory\n", arena->last_alive);
 	ft_printf("Cycle finished at: %d\n", arena->cycle);
 }

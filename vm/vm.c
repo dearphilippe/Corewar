@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 05:21:11 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/06 09:25:41 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static void		init_players(t_arena *arena, t_process *players)
 	while (++i < arena->num_players)
 	{
 		arena->players[i].num_of_process = 1;
-		arena->players[i].player_num = i;
-		players[i].player_num = -(i + 1);
-		*((int *)((players[i]).regs[0])) = players[i].player_num;
+		arena->players[i].player_num = -(i + 1);
+		players[i].player_num = i;
+		*((int *)((players[i]).regs[0])) = -(i + 1);
 		k = 0;
 		while (++k < REG_NUMBER)
 			*((int *)((players[i]).regs[k])) = 0;
