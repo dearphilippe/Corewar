@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:58:36 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 23:59:34 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 18:12:24 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void				lldi(t_arena *arena, t_process *process)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
 			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;
-	ft_printf("p %d | lldi %d %d r%d\n", process->process_num, params[0], params[1], *process->instruct.param[2]);	
+	ft_printf("P %4d | lldi %d %d r%d\n", process->process_num, params[0], params[1], *process->instruct.param[2]);	
 	free(params);
 	read_mem(arena, process, addr);
 }

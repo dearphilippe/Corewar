@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 22:56:48 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 01:29:40 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void			create_arena(char **argv, t_arena *arena, t_process *p)
 			}
 			close(fd);
 		}
-	arena->num_processes = arena->num_players;
+	arena->num_processes = arena->num_players + 1;
 	arena->proc_queue = init_pqueue();
 	arena->last_alive = 0;
 }
@@ -68,7 +68,7 @@ static void		init_players(t_arena *arena, t_process *players)
 		k = 0;
 		while (++k < REG_NUMBER)
 			*((int *)((players[i]).regs[k])) = 0;
-		players[i].process_num = i;
+		players[i].process_num = i + 1;
 		arena->players[i].player_id = i;
 		players[i].pc = (i * (MEM_SIZE / arena->num_players)) + arena->arena;
 	}
@@ -85,7 +85,7 @@ int				main(int argc, char **argv)
 	init_players(&arena, players);
 	create_arena(argv, &arena, players);
 	get_inital_instructs(players, &arena);
-	print_arena(&arena);
+	// print_arena(&arena);
 	// ft_printf("start cycle %d %d\n",((t_process *)arena.proc_queue->first->content)->execute_cycle, ((t_process *)arena.proc_queue->first->next->content)->execute_cycle);
 	start_game(&arena);
 	print_arena(&arena);

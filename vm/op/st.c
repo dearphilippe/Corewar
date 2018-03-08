@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 21:50:29 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 20:03:40 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 19:04:57 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void				st(t_arena *arena, t_process *process)
 	{
 		addr = process->instruct.pc;
 		dist = read_mem(arena, process, process->instruct.param[1]);
+		ft_printf("P %4d | st r%d %d\n", process->process_num, *process->instruct.param[0], dist);
 		i = -1;
 		while (++i < abs(dist % IDX_MOD))
 			if (dist > 0)
@@ -62,6 +63,5 @@ void				st(t_arena *arena, t_process *process)
 			addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		}
 	}
-	ft_printf("p %d | st r%d %d\n", process->process_num, *process->instruct.param[0], dist);
 	free(params);
 }

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/07 15:49:38 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 02:17:21 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ void			start_game(t_arena *arena)
 		}
 		if (arena->cycle >= arena->next_check)
 			die_check(arena);
-		if (arena->cycle == 5000)
-		 	break ;
+		// if (arena->cycle == 9350)
+		//  	break ;
 		++arena->cycle;
 		ft_printf("It is now cycle %d\n", arena->cycle);
 	}
-	ft_printf("Player %d has won! Glory\n", arena->last_alive);
-	ft_printf("Cycle finished at: %d\n", arena->cycle);
+	// ft_printf("Player %d has won! Glory\n", arena->last_alive);
+	// ft_printf("Cycle finished at: %d\n", arena->cycle);
 }
