@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:30:27 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 01:08:22 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:21:14 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void			make_proc(t_arena *arena, t_process *process,
 	proc_child.execute_cycle = cycles + arena->cycle;
 	ft_bzero(&(proc_child.instruct), sizeof(t_instruction));
 	proc_child.instruct.op_code = *proc_child.pc;
-	// proc_child.num_live = 0;
 	proc_child.process_num = arena->num_processes;
 	++(arena->num_processes);
 	++((arena->players)[proc_child.player_num].num_of_process);

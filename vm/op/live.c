@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/03/07 18:12:18 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:43:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void    op_live(t_process *process,  t_arena *arena)
 				arena->players[i].player_num * -1, arena->players[i].name);
 		}
 	process->num_live++;
+	process->last_live = arena->cycle;
 }

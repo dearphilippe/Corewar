@@ -6,11 +6,27 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 02:17:21 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:44:33 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+static void		print_winner(t_arena *arena)
+{
+	int			i;
+
+	i = -1;
+	while (++i < arena->num_players)
+	{
+		if (arena->players[i].player_num == arena->last_alive)
+		{
+			ft_printf("Contestant %d, \"%s\", has won !\n", arena->last_alive,
+			arena->players[i].name);
+			break ;
+		}
+	}
+}
 
 /*
 ** count_live will count the total number of lives called in this cycle
@@ -37,7 +53,7 @@ static int		count_live(t_arena *arena)
 		if (!proc->num_live || arena->cycle_to_die <= 0)
 		{
 			ft_printf("Process %d hasn't lived for %d cycles\n",
-				proc->process_num, arena->cycle_to_die);
+				proc->process_num, arena->cycle - proc->last_live);
 			if (prev)
 				prev->next = node->next;
 			else
@@ -90,6 +106,5 @@ void			start_game(t_arena *arena)
 		++arena->cycle;
 		ft_printf("It is now cycle %d\n", arena->cycle);
 	}
-	// ft_printf("Player %d has won! Glory\n", arena->last_alive);
-	// ft_printf("Cycle finished at: %d\n", arena->cycle);
+	print_winner(arena);
 }

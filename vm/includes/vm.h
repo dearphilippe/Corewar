@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 03:15:02 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:24:09 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 # define VM_H
 
-# include "libft.h"
+# include "../../libstar/libft.h"
 # include "op.h"
+
+# define OPEN_FILE_ERR	0
+# define FILE_TOO_SMALL	1
+# define MISSING_MAGIC	2
 
 typedef struct		s_instruction
 {
@@ -36,6 +40,7 @@ typedef struct		s_process
 	int				process_num;
 	int				player_num;
 	int				num_live;
+	int				last_live;
 	t_instruction	instruct;
 }					t_process;
 
@@ -46,6 +51,7 @@ typedef struct		s_player
 	int				num_of_process;
 	char			name[ PROG_NAME_LENGTH + 1 ];
 	char			comment[ COMMENT_LENGTH + 1 ];
+	int				player_size;
 }					t_player;
 
 typedef struct		s_arena
@@ -76,5 +82,6 @@ int					get_instruct(unsigned char **pc, unsigned char *a,
 
 void	op_control(t_arena *arena, t_process *proc);
 	
+void			get_player_stats(t_player *player, int fd);
 
 #endif
