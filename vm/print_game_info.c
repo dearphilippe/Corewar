@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-int				etended_verbose(int i, int number, t_arena *arena, char **argv)
+int				extended_verbose(int i, int number, t_arena *arena, char **argv)
 {
 	if (ft_atoi(argv[i]))
 	{
@@ -34,7 +34,7 @@ int				etended_verbose(int i, int number, t_arena *arena, char **argv)
 	if (argv[i][0] && ft_isdigit(argv[i][0]))
 		return (1);
 	else
-		return (1);
+		return (0);
 }
 
 int				extended_dump(int i, t_arena *arena, char **argv)
@@ -44,7 +44,7 @@ int				extended_dump(int i, t_arena *arena, char **argv)
 	if (argv[i][0] && ft_isdigit(argv[i][0]))
 		return (i);
 	else
-		return (0);
+		return (1);
 }
 
 int				extended_cycles(int i, t_arena *arena, char **argv)
@@ -93,10 +93,10 @@ int				flag_check(int argc, char **argv, t_arena *arena)
 
 	i = 1;
 	off_set = 0;
-	if (argc >= 3)
+	if (argc > 0)
 	{
-		if (argc > 3)
-			off_set = flags(argc, argv, arena, 1);
+		if (argc > 2)
+			off_set = flags(argc, argv, arena, 0);
 		while (i < argc)
 		{
 			len = ft_strlen(argv[i + off_set]);
