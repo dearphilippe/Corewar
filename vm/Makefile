@@ -6,7 +6,7 @@ CC = gcc
 
 INC = ./includes
 
-SRC + *.c
+SRC = *.c
 
 SRC_MOAR = op/*.c
 
