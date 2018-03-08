@@ -14,7 +14,7 @@
 
 # define VM_H
 
-# include "libft.h"
+# include "../../libstar/libft.h"
 # include "op.h"
 
 typedef struct		s_instruction

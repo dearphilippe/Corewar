@@ -1,81 +1,72 @@
 NAME = libft.a
-FLAGS = -Wall -Wextra -Werror -c -I
+FLAGS = -Wall -Werror -Wextra -I. -I/ftprintf -c
 CC = gcc
-OBJ = $(SRC:.c=.o) 
+OBJSRC = $(patsubst %, %.o, $(SRC))
 
-SRC += ft_atoi.c
-SRC += ft_bzero.c
-SRC += ft_isalnum.c
-SRC += ft_isalpha.c
-SRC += ft_isascii.c
-SRC += ft_isdigit.c
-SRC += ft_isprint.c
-SRC += ft_itoa.c
-SRC += ft_lstadd.c
-SRC += ft_lstdel.c
-SRC += ft_lstdelone.c
-SRC += ft_lstiter.c
-SRC += ft_lstmap.c
-SRC += ft_lstnew.c
-SRC += ft_memalloc.c
-SRC += ft_memccpy.c
-SRC += ft_memchr.c
-SRC += ft_memcmp.c
-SRC += ft_memcpy.c
-SRC += ft_memdel.c
-SRC += ft_memmove.c
-SRC += ft_memset.c
-SRC += ft_putchar.c
-SRC += ft_putchar_fd.c
-SRC += ft_putendl.c
-SRC += ft_putendl_fd.c
-SRC += ft_putnbr.c
-SRC += ft_putnbr_fd.c
-SRC += ft_putstr.c
-SRC += ft_putstr_fd.c
-SRC += ft_strcat.c
-SRC += ft_strchr.c
-SRC += ft_strclr.c
-SRC += ft_strcmp.c
-SRC += ft_strcpy.c
-SRC += ft_strdel.c
-SRC += ft_strdup.c
-SRC += ft_strequ.c
-SRC += ft_striter.c
-SRC += ft_striteri.c
-SRC += ft_strjoin.c
-SRC += ft_strlcat.c
-SRC += ft_strlen.c
-SRC += ft_strmap.c
-SRC += ft_strmapi.c
-SRC += ft_strncat.c
-SRC += ft_strncmp.c
-SRC += ft_strncpy.c
-SRC += ft_strnequ.c
-SRC += ft_strnew.c
-SRC += ft_strnstr.c
-SRC += ft_strrchr.c
-SRC += ft_strsplit.c
-SRC += ft_strstr.c
-SRC += ft_strsub.c
-SRC += ft_strtrim.c
-SRC += ft_tolower.c
-SRC += ft_toupper.c
-SRC += pqueue.c
-SRC += del_node.c
+
+
+# GENERAL LIBFT FUNCTIONS
+SRC += ft_strlen
+SRC += ft_memalloc
+SRC += ft_strcpy
+SRC += ft_bzero
+SRC += ft_isalpha
+SRC += ft_isdigit
+SRC += ft_memdel
+SRC += ft_memset
+SRC += ft_strncpy
+SRC += ft_strcat
+SRC += ft_strnew
+SRC += ft_strsplit
+SRC += ft_strsub
+SRC += ft_strcmp
+SRC += ft_memcpy
+SRC += ft_memmove
+SRC += ft_queue
+SRC += ft_queue_util
+SRC += ft_dblistnew
+SRC += ft_mergesort
+SRC += ft_strdup
+SRC += ft_strchr
+SRC += ft_numlen
+SRC += ft_strnstr
+SRC += ft_strchr
+SRC += ft_nlookup
+SRC += ft_atoi
+SRC += ft_lstadd
+SRC += ft_isalnum
+SRC += ft_strnequ
+SRC += ft_strncmp
+SRC += pqueue
+
+
+# FTPRINTF
+SRC += ftprintf/conversion_diou
+SRC += ftprintf/dispatcher
+SRC += ftprintf/printflags
+SRC += ftprintf/conversion_sc
+SRC += ftprintf/storeflags
+SRC += ftprintf/conversion_xp
+SRC += ftprintf/misc
+SRC += ftprintf/ulitobase
 
 all: $(NAME)
 
-$(NAME): $(SRC)
-	@ echo "Compiling library..."
-	@ $(CC) $(FLAGS) libft.h $(SRC)
-	@ ar -rcs $(NAME) $(OBJ)
+$(NAME): $(OBJSRC)
+	@ echo "Building static library..."
+	@ ar -rcs $(NAME) $(OBJSRC)
+
+%.o: %.c
+	@ echo "Compiling $<..."
+	@ $(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@ echo "Cleaning folder..."	
-	@ /bin/rm -f $(OBJ)
+	@ /bin/rm -f $(OBJSRC)
+	@ echo "Cleaning folders of object files..."
 
 fclean: clean
 	@ /bin/rm -f $(NAME)
+	@ echo "Removing library file and binary..."
 
 re: fclean all
+	@ echo "Program Remade"

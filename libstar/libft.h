@@ -134,7 +134,17 @@ void				*pqueue_find(t_pqueue *queue, void *trgt,
 void				*ft_depqueue(t_pqueue *queue);
 void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
 	int (*comparer)(void *, void *));
-t_pqueue			*init_pqueue(void);
 void				del_node(t_node *node, t_node *prev);
-	
+int					ft_printf(const char *format, ...);
+
+/*
+**Sams shit queue headers are as follows
+*/
+
+t_pqueue			*init_pqueue(void);
+void                ft_enpqueue(t_pqueue *queue, void *content, size_t c_size, int (*comparer)(void *, void *));
+void                *ft_depqueue(t_pqueue *queue);
+void                *pqueue_find(t_pqueue *queue, void *trgt, int (*equality)(void *, void *));
+void                del_pqueue(t_pqueue *queue, void (*deconstruct)(void *ptr));
+
 #endif
