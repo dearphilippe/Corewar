@@ -1,29 +1,24 @@
-#include "vm.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   turdmonkeys.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbalcort <sbalcort@student.42.us.org>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/07 13:41:24 by sbalcort          #+#    #+#             */
+/*   Updated: 2018/03/07 13:41:27 by sbalcort         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
-**function prototype in create_arena
-**
-**			get_player_stats(&arena->players[i], fd);
-**
-    typedef struct		s_player
-    {
-    int				player_num;
-    int				player_id;
-    int				num_of_process;
-    int				player_size;
-    char			name[ PROG_NAME_LENGTH + 1 ];
-    char			comment[ COMMENT_LENGTH + 1 ];
-    }					t_player;
-**
-*/
+#include "vm.h"
 
 void    read_file_error(int i, int fd)
 {
-    if (i == 0)     //open file error
+    if (i == FILE_ERROR)
         ft_printf("Error opening file");
-    if (i == 1)     //file could not read initial PROG_NAME_LENGTH + COMMENT_LENGTH + 16 bytes
+    if (i == SIZE_ERROR)
         ft_printf("Improper file size");
-    if (i == 2)     //magic number missing. Is it a core war file ?
+    if (i == MAGIC_MISSING)
         ft_printf("Magic Number missing");
     if (fd > -1)
         close (fd);
@@ -67,11 +62,11 @@ void    get_player_stats(t_player *player, int fd)
 
     ft_bzero(content, PROG_NAME_LENGTH + COMMENT_LENGTH + 17);
     if (read(fd, content, 0) < 0 || fd < 0)
-        read_file_error(0, fd);
+        read_file_error(FILE_ERROR, fd);
     if (!read(fd, content, PROG_NAME_LENGTH + COMMENT_LENGTH + 16)) 
-        read_file_error(1, fd);
+        read_file_error(SIZE_ERROR, fd);
     if ((content ^ COREWAR_EXEC_MAGIC)
-        read_file_error(2);
+        read_file_error(MAGIC_MISSING, fd);
     get_player_name(content, player->name);
     player->player_size = (int)content[sizeof(COREWAR_EXEC_MAGIC) + sizeof(PROG_NAME_LENGTH)];
     get_player_comment(content, payer->comment);

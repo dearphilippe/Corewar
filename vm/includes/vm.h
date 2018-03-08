@@ -17,6 +17,10 @@
 # include "libft.h"
 # include "op.h"
 
+# define FILE_ERROR 1
+# define SIZE_ERROR 2
+# define MAGIC_MISSING 3
+
 typedef struct		s_instruction
 {
 	int				op_code;
@@ -57,6 +61,7 @@ typedef struct		s_arena
 	t_pqueue		*proc_queue;
 	t_player		*players;
 	int				last_alive;
+    int				player_size;
 	int				num_processes;
 	unsigned char	arena[ MEM_SIZE ];
 }					t_arena;
