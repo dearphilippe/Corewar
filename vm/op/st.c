@@ -62,6 +62,8 @@ void				st(t_arena *arena, t_process *process)
 			addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		}
 	}
-	ft_printf("p %d | st r%d %d\n", process->process_num, *process->instruct.param[0], dist);
+	if ((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | st r%d %d\n", process->process_num,
+		*process->instruct.param[0], dist);
 	free(params);
 }

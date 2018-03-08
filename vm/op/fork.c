@@ -56,5 +56,6 @@ void	op_fork(t_arena *arena, t_process *process)
 		else
 			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;
 	make_proc(arena, process, addr);
-	ft_printf("p %d | fork %d\n", process->process_num, *(short *)param);
+	if((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | fork %d\n", process->process_num, *(short *)param);
 }

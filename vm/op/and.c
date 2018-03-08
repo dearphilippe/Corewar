@@ -27,6 +27,7 @@ void	op_and(t_arena *arena, t_process *process)
 	process->carry = (params[0] & params[1]) ? 0 : 1;
 	reg = *(process->instruct.param[2]);
 	*(int *)process->regs[reg - 1] = (params[0] & params[1]);
-	ft_printf("p %d | and %d %d r%d\n", process->process_num, params[0], params[1], reg);
+	if((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | and %d %d r%d\n", process->process_num, params[0], params[1], reg);
 	free(params);
 }

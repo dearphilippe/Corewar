@@ -36,8 +36,9 @@ static int		count_live(t_arena *arena)
 		live_count += proc->num_live;
 		if (!proc->num_live || arena->cycle_to_die <= 0)
 		{
-			ft_printf("Process %d hasn't lived for %d cycles\n",
-				proc->process_num, arena->cycle_to_die);
+			if ((VERB_8 & arena->flag) == 16)
+				ft_printf("Process %d hasn't lived for %d cycles\n",
+			proc->process_num, arena->cycle_to_die);
 			if (prev)
 				prev->next = node->next;
 			else
@@ -62,7 +63,8 @@ static void		die_check(t_arena *arena)
 	{
 		checkups = 0;
 		arena->cycle_to_die -= CYCLE_DELTA;
-		ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
+		if ((VERB_1 & arena->flag) == 2)
+			ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 	}
 	arena->next_check = arena->cycle + arena->cycle_to_die;
 }
@@ -89,7 +91,19 @@ void			start_game(t_arena *arena)
 		if (arena->cycle == 5000)
 			break ;
 		++arena->cycle;
-		ft_printf("It is now cycle %d\n", arena->cycle);
+		if ((VERB_2 & arena->flag) == 4)
+			ft_printf("It is now cycle %d\n", arena->cycle);
+		if ((MEM_DUMP & arena->flag) == MEM_DUMP &&
+		arena->cycle >= arena->mem_dump)
+		{
+			print_arena(arena);
+			exit(0);
+		}
+		if (((MEM_CYCLES & arena->flag) == MEM_CYCLES) && (arena->cycle % arena->cycles == 0))
+		{
+			print_arena(arena);
+			sleep(SLEEP_TIME);
+		}
 	}
 	print_results(arena);
 }

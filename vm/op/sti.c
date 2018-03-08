@@ -36,8 +36,11 @@ void				sti(t_arena *arena, t_process *proc)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
 			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;			
-	ft_printf("p %1d | sti r%d %d %d\n", proc->process_num, reg, par[1], par[2]);
-	ft_printf("    | with pc and mod (%d)\n", dist + proc->instruct.pc - arena->arena);
+	if ((VERB_4 & arena->flag) == 8)
+	{
+		ft_printf("P %1d | sti r%d %d %d\n", proc->process_num, reg, par[1], par[2]);
+		ft_printf("    | with pc and mod (%d)\n", dist + proc->instruct.pc - arena->arena);
+	}
 	i = REG_SIZE;
 	while (--i >= 0)
 	{

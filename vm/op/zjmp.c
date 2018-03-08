@@ -39,5 +39,7 @@ void				zjmp(t_arena *arena, t_process *process)
 				addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;
 		process->pc = addr;
 	}
-	ft_printf("p %d | zjmp %d %s\n", process->process_num, numbr, process->carry ? "OK" : "FAIL");
+	if ((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | zjmp %d %s\n", process->process_num, numbr,
+		process->carry ? "OK" : "FAIL");
 }

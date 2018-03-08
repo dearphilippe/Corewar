@@ -24,8 +24,9 @@ void	sub(t_arena *arena, t_process *process)
 		return ;
 	}
 	*(int *)process->regs[*process->instruct.param[2]] = params[0] - params[1];
-	ft_printf("p %d | sub r%d r%d r%d\n", process->process_num,
-		*process->instruct.param[0], *process->instruct.param[1],
-		*process->instruct.param[2]);
+	if ((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | sub r%d r%d r%d\n", process->process_num,
+			*process->instruct.param[0], *process->instruct.param[1],
+			*process->instruct.param[2]);
 	free(params);
 }

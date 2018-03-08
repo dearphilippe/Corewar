@@ -21,6 +21,20 @@
 # define FILE_TOO_SMALL	1
 # define MISSING_MAGIC	2
 
+# define MEM_DUMP		0b0000000010000000
+# define VEBOSE			0b0000000001000000
+# define VERB_0			0b0000000000000001
+# define VERB_1			0b0000000000000010
+# define VERB_2			0b0000000000000100
+# define VERB_4			0b0000000000001000
+# define VERB_8			0b0000000000010000
+# define VERB_16		0b0000000000100000
+# define MEM_CYCLES		0b0000000100000000
+# define VERBOSE_FLAG   "-v"
+# define DUMP_FLAG      "-d"
+# define CYCLE_FLAG     "-s"
+# define SLEEP_TIME		3
+
 typedef struct		s_instruction
 {
 	int				op_code;
@@ -64,6 +78,9 @@ typedef struct		s_arena
 	int				last_alive;
 	int				num_processes;
 	unsigned char	arena[MEM_SIZE];
+	unsigned short	flag;
+	int				mem_dump;
+	int				cycles;
 }					t_arena;
 
 int					comparison(void *ptr1, void *ptr2);
@@ -78,7 +95,7 @@ void				start_game(t_arena *arena);
 
 int					get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in);
-void				get_player_stats(t_player *player, int fd);
+void				get_player_stats(t_player *player, int fd, char *file);
 
 void				op_control(t_arena *arena, t_process *proc);
 
@@ -86,5 +103,20 @@ void				print_player_stats(t_arena *arena);
 
 void				print_results(t_arena *arena);
 
+void				print_starting_info(void);
+
+int					flag_check(int argc, char **argv, t_arena *arena);
+
 
 #endif
+
+
+/*
+
+begining 
+
+add -d file for dump
+
+add -v for vebose 
+	add verbose to arena struct
+*/
