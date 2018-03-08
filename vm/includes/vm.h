@@ -17,20 +17,24 @@
 # include "../../libstar/libft.h"
 # include "op.h"
 
+# define OPEN_FILE_ERR	0
+# define FILE_TOO_SMALL	1
+# define MISSING_MAGIC	2
+
 typedef struct		s_instruction
 {
 	int				op_code;
 	unsigned char	coding_byte;
 	unsigned char	*pc;
-	unsigned char	*param[ MAX_PARAM ];
-	int				p_s[ MAX_PARAM ];
+	unsigned char	*param[MAX_PARAM];
+	int				p_s[MAX_PARAM];
 	int				illegal : 1;
 }					t_instruction;
 
 typedef struct		s_process
 {
 	unsigned char	*pc;
-	unsigned char	regs[ REG_NUMBER ][ REG_SIZE ];
+	unsigned char	regs[REG_NUMBER][REG_SIZE];
 	int				execute_cycle;
 	int				carry : 1;
 	int				process_num;
@@ -44,8 +48,9 @@ typedef struct		s_player
 	int				player_num;
 	int				player_id;
 	int				num_of_process;
-	char			name[ PROG_NAME_LENGTH + 1 ];
-	char			comment[ COMMENT_LENGTH + 1 ];
+	int				player_size;
+	char			name[PROG_NAME_LENGTH + 1];
+	char			comment[COMMENT_LENGTH + 1];
 }					t_player;
 
 typedef struct		s_arena
@@ -58,7 +63,7 @@ typedef struct		s_arena
 	t_player		*players;
 	int				last_alive;
 	int				num_processes;
-	unsigned char	arena[ MEM_SIZE ];
+	unsigned char	arena[MEM_SIZE];
 }					t_arena;
 
 int					comparison(void *ptr1, void *ptr2);
@@ -73,8 +78,13 @@ void				start_game(t_arena *arena);
 
 int					get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in);
+void				get_player_stats(t_player *player, int fd);
 
-void	op_control(t_arena *arena, t_process *proc);
-	
+void				op_control(t_arena *arena, t_process *proc);
+
+void				print_player_stats(t_arena *arena);
+
+void				print_results(t_arena *arena);
+
 
 #endif

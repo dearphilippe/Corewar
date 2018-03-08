@@ -31,18 +31,18 @@ static void			create_arena(char **argv, t_arena *arena, t_process *p)
 	int				i;
 	int				k;
 	int				fd;
-	unsigned char	str[ 4 ];
+	unsigned char	str[4];
 
 	i = -1;
 	while (++i < arena->num_players)
 		if ((fd = open(argv[i + 1], O_RDONLY)) > 0)
 		{
-			//Validate .cor??
+			get_player_stats(&arena->players[i], fd);
 			lseek(fd, PROG_NAME_LENGTH + COMMENT_LENGTH + 16, SEEK_SET);
 			k = 0;
 			while (read(fd, str, 1) > 0)
 			{
-				*(p[i].pc + (k)) = *str;			
+				*(p[i].pc + (k)) = *str;
 				++k;
 			}
 			close(fd);
@@ -78,15 +78,18 @@ int				main(int argc, char **argv)
 {
 	t_process	*players;
 	t_arena		arena;
-
-	arena.num_players = argc - 1; //Change to include options
-	players = ft_memalloc(sizeof(t_process) * arena.num_players);
-	ft_bzero(arena.arena, MEM_SIZE);
-	init_players(&arena, players);
-	create_arena(argv, &arena, players);
-	get_inital_instructs(players, &arena);
-	print_arena(&arena);
-	// ft_printf("start cycle %d %d\n",((t_process *)arena.proc_queue->first->content)->execute_cycle, ((t_process *)arena.proc_queue->first->next->content)->execute_cycle);
-	start_game(&arena);
-	print_arena(&arena);
+	if (argc == 3)
+	{
+		arena.num_players = argc - 1;
+		players = ft_memalloc(sizeof(t_process) * arena.num_players);
+		ft_bzero(arena.arena, MEM_SIZE);
+		init_players(&arena, players);
+		create_arena(argv, &arena, players);
+		get_inital_instructs(players, &arena);
+		print_arena(&arena);
+		// ft_printf("start cycle %d %d\n",((t_process *)arena.proc_queue->first->content)->execute_cycle, ((t_process *)arena.proc_queue->first->next->content)->execute_cycle);
+		start_game(&arena);
+		print_arena(&arena);
+		
+	}
 }

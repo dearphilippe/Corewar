@@ -74,6 +74,7 @@ void			start_game(t_arena *arena)
 	arena->cycle = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;
 	arena->next_check = CYCLE_TO_DIE;
+	print_player_stats(arena);
 	while (arena->proc_queue->first)
 	{
 		process = arena->proc_queue->first->content;
@@ -86,10 +87,9 @@ void			start_game(t_arena *arena)
 		if (arena->cycle >= arena->next_check)
 			die_check(arena);
 		if (arena->cycle == 5000)
-		 	break ;
+			break ;
 		++arena->cycle;
 		ft_printf("It is now cycle %d\n", arena->cycle);
 	}
-	ft_printf("Player %d has won! Glory\n", arena->last_alive);
-	ft_printf("Cycle finished at: %d\n", arena->cycle);
+	print_results(arena);
 }

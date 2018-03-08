@@ -35,6 +35,8 @@ SRC += op/sti.c
 SRC += op/sub.c
 SRC += op/xor.c
 SRC += op/zjmp.c
+SRC += get_stats.c
+SRC += player_stats.c
 
 LIBFT = ../libstar/libft.a
 
