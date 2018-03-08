@@ -38,3 +38,16 @@ void	print_results(t_arena *arena)
 	else
 		ft_printf("Sorry there was no winner");
 }
+
+void	print_starting_info(void)
+{
+	ft_printf("\nUsage: ./corewar [-d N -s N -v N]| <champion1.cor> <...>\n#
+	### TEXT OUTPUT MODE ####\n\t-d N\t: Dumps memory after N cycles then ex
+	its\n\t-s N\t: Runs N cycles, dump memory, pauses, then repeats\n\t-v N
+	\t: Verbosity lvls, can be added with ^ to enable several\n\t\t- 0 : Sho
+	w only essentials\n\t\t- 1 : Show lives\n\t\t- 2 : Show cycles\n\t\t- 4 :
+	 Show operations(Params are NOT litteral ...)\n\t\t- 8 : Show deaths\n\t
+	 \t- 16 : Show PC movements (Except for jumps)\n########################
+	 ###\n\n");
+	exit(1);
+}

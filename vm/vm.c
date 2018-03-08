@@ -79,10 +79,12 @@ int				main(int argc, char **argv)
 {
 	t_process	*players;
 	t_arena		arena;
+	int			i;
 
-	if (flag_check(argc, argv, &arena))
+	i = flag_check(argc, argv, &arena);
+	if (i >= 0)
 	{
-		arena.num_players = argc;
+		arena.num_players = argc - i;
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
 		ft_bzero(arena.arena, MEM_SIZE);
 		init_players(&arena, players);
