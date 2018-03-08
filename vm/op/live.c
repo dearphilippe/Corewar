@@ -6,17 +6,17 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/03/08 06:43:38 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 07:18:08 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void    op_live(t_process *process,  t_arena *arena)
+static int			get_player_num(t_arena *arena, t_process *process)
 {
-    int player_num;
+	int				player_num;
 	unsigned char	*ptr;
-	int	i;
+	int				i;
 
 	ptr = process->instruct.param[0];
 	i = -1;
@@ -27,15 +27,26 @@ void    op_live(t_process *process,  t_arena *arena)
 		player_num += *ptr;
 		ptr = ptr + 1 - arena->arena < MEM_SIZE ? ptr + 1 : arena->arena; 
 	}
+	return (player_num);
+}
+
+void  				op_live(t_process *process,  t_arena *arena)
+{
+    int				player_num;
+	int				i;
+
+	player_num = get_player_num(arena, process);
 	i = -1;
-	ft_printf("P %4d | live %d\n", process->process_num, player_num);	
 	while (++i < arena->num_players)
 		if (arena->players[i].player_num == player_num)
 		{
 			arena->last_alive = player_num;
-			ft_printf("Player %d (%s) is said to be alive\n",
-				arena->players[i].player_num * -1, arena->players[i].name);
+			if ((VERB_1 & arena->flag ) == 2)
+				ft_printf("A process shows that player %d \"%s\" is alive\n",
+			arena->players[i].player_num, arena->players[i].name);
 		}
 	process->num_live++;
 	process->last_live = arena->cycle;
+	if((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | live %d\n", process->process_num, player_num);
 }

@@ -37,20 +37,21 @@ SRC += op/xor.c
 SRC += op/zjmp.c
 SRC += get_stats.c
 SRC += player_stats.c
+SRC += print_game_info.c
 
 LIBFT = ../libstar/libft.a
 
 RM = rm -Rf
 
-all: $(NAME)
-
 $(NAME):
-	$(CC) -o $(NAME) $(FLAGS) -I$(INC) -I ../libstar/ftprintf $(SRC) $(LIBFT)
+	$(CC) -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(SRC_MOAR) $(LIBFT)
+
+all: $(NAME)
 
 clean:
 	$(RM) $(NAME)
 
 debug: clean
-	$(CC) -g -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(LIBFT) -fsanitize=address
+	$(CC) -g -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(SRC_MOAR) $(LIBFT)
 
 re: clean all

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 21:44:38 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 06:18:16 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 07:20:29 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	add(t_arena *arena, t_process *process)
 	reg = *process->instruct.param[2];
 	*((int *)process->regs[reg - 1]) = params[0] + params[1];
 	process->carry = params[0] + params[1] ? 0 : 1;
-	ft_printf("P %4d | add r%d r%d r%d\n", process->process_num, *process->instruct.param[0], *process->instruct.param[1], *process->instruct.param[2]);
+	if((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | add r%d r%d r%d\n", process->process_num, 
+			*process->instruct.param[0], *process->instruct.param[1], 
+			*process->instruct.param[2]);
 	free(params);
 }

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 19:10:33 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 00:38:24 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 07:45:23 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void			print_arena(t_arena *arena)
 	t_node			*node;
 	t_process		*proc;
 
-	// ft_printf("MEM");
 	i = -1;
 	while (++i < MEM_SIZE)
 	{

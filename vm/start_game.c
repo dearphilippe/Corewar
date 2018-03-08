@@ -6,26 +6,25 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 06:44:33 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 07:29:24 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		print_winner(t_arena *arena)
+static void		*count_aux(t_arena *arena, t_process *proc, t_node *node,
+	t_node *prev)
 {
-	int			i;
-
-	i = -1;
-	while (++i < arena->num_players)
-	{
-		if (arena->players[i].player_num == arena->last_alive)
-		{
-			ft_printf("Contestant %d, \"%s\", has won !\n", arena->last_alive,
-			arena->players[i].name);
-			break ;
-		}
-	}
+	if ((VERB_8 & arena->flag) == 16)
+		ft_printf("Process %d hasn't lived for %d cycles\n",
+			proc->process_num, arena->cycle_to_die);
+	if (prev)
+		prev->next = node->next;
+	else
+		arena->proc_queue->first = node->next;
+	arena->players[proc->player_num].num_of_process--;
+	free(proc);
+	return (NULL);
 }
 
 /*
@@ -51,17 +50,7 @@ static int		count_live(t_arena *arena)
 		proc = node->content;
 		live_count += proc->num_live;
 		if (!proc->num_live || arena->cycle_to_die <= 0)
-		{
-			ft_printf("Process %d hasn't lived for %d cycles\n",
-				proc->process_num, arena->cycle - proc->last_live);
-			if (prev)
-				prev->next = node->next;
-			else
-				arena->proc_queue->first = node->next;
-			node = NULL;
-			arena->players[proc->player_num].num_of_process--;
-			free(proc);
-		}
+			node = count_aux(arena, proc, node, prev);
 		else
 			proc->num_live = 0;
 		prev = node ? node : prev;
@@ -78,7 +67,8 @@ static void		die_check(t_arena *arena)
 	{
 		checkups = 0;
 		arena->cycle_to_die -= CYCLE_DELTA;
-		ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
+		if ((VERB_1 & arena->flag) == 2)
+			ft_printf("Cycle to die is now %d\n", arena->cycle_to_die);
 	}
 	arena->next_check = arena->cycle + arena->cycle_to_die;
 }
@@ -90,6 +80,7 @@ void			start_game(t_arena *arena)
 	arena->cycle = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;
 	arena->next_check = CYCLE_TO_DIE;
+	print_player_stats(arena);
 	while (arena->proc_queue->first)
 	{
 		process = arena->proc_queue->first->content;
@@ -101,10 +92,21 @@ void			start_game(t_arena *arena)
 		}
 		if (arena->cycle >= arena->next_check)
 			die_check(arena);
-		// if (arena->cycle == 9350)
-		//  	break ;
 		++arena->cycle;
-		ft_printf("It is now cycle %d\n", arena->cycle);
+		if ((VERB_2 & arena->flag) == 4)
+			ft_printf("It is now cycle %d\n", arena->cycle);
+		if ((MEM_DUMP & arena->flag) == MEM_DUMP &&
+		arena->cycle >= arena->mem_dump)
+		{
+			print_arena(arena);
+			exit(0);
+		}
+		if (((MEM_CYCLES & arena->flag) == MEM_CYCLES) &&
+			(arena->cycle % arena->cycles == 0))
+		{
+			print_arena(arena);
+			sleep(SLEEP_TIME);
+		}
 	}
-	print_winner(arena);
+	print_results(arena);
 }

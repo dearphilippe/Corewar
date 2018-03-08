@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:51:10 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 01:08:25 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 07:18:49 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ static void			make_proc(t_arena *arena, t_process *process,
 	cycles = cycles ? cycles : 1;
 	proc_child.execute_cycle = cycles + arena->cycle;
 	proc_child.instruct.op_code = *proc_child.pc;
-	// proc_child.num_live = 0;
 	proc_child.process_num = arena->num_processes;
 	++(arena->num_processes);
 	++((arena->players)[proc_child.player_num].num_of_process);
 	ft_enpqueue(arena->proc_queue, &proc_child, sizeof(t_process), comparison);
 }
 
-void	op_lfork(t_arena *arena, t_process *process)
+void				op_lfork(t_arena *arena, t_process *process)
 {
 	unsigned char	param [ 2 ];
 	int				i;
@@ -56,5 +55,6 @@ void	op_lfork(t_arena *arena, t_process *process)
 		else
 			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;
 	make_proc(arena, process, addr);
-	ft_printf("P %4d | lfork %d\n", process->process_num, *(short *)param);
+	if((VERB_4 & arena->flag) == 8)
+		ft_printf("P% 5d | lfork %d\n", process->process_num, *(short *)param);
 }
