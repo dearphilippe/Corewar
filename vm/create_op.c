@@ -6,11 +6,36 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 22:58:40 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 15:29:06 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+static int	advance_pc(unsigned char coding_byte, unsigned char op_code,
+	unsigned char **pc, unsigned char *arena)
+{
+	int		num_param;
+	int		len;
+	int		i;
+
+	num_param = op_tab[op_code - 1].num_param;
+	len = 1;
+	i = -1;
+	while (++i < num_param)
+	{
+		if (((coding_byte >> (6 - i * 2)) & 0xFF) == T_DIR)
+			len += op_tab[op_code - 1].tr ? 2 : DIR_SIZE;
+		if (((coding_byte >> (6 - i * 2)) & 0xFF) == T_IND)
+			len += IND_SIZE;
+		if (((coding_byte >> (6 - i * 2)) & 0xFF) == T_REG)
+			len += 1;
+	}
+	i = -1;
+	while (++i < len)
+		*pc = *pc + 1 < arena + MEM_SIZE ? *pc + 1 : arena;
+	return (0);
+}
 
 static int	check_coding_byte(unsigned char coding_byte, t_instruction *instruc)
 {
@@ -119,8 +144,9 @@ int get_instruct(unsigned char **pc, unsigned char *a,
 				*pc = (*pc + 1 - a < MEM_SIZE) ? *pc + 1 : a;
 			return (op_tab[in->op_code - 1].tr ? 3 : DIR_SIZE + 1);
 		}
-		if (!check_coding_byte((in->coding_byte = **pc), in))
-			return (0);
+		in->coding_byte = **pc;
+		if (!check_coding_byte(in->coding_byte, in))
+			return (advance_pc(in->coding_byte, in->op_code, pc, a));
 		*pc = (*pc + 1 - a < MEM_SIZE) ? *pc + 1 : a;
 		in->param[0] = *pc;
 		len = get_len(in->coding_byte, in, pc, a);

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/07 12:03:23 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 15:49:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void			start_game(t_arena *arena)
 		}
 		if (arena->cycle >= arena->next_check)
 			die_check(arena);
-		if (arena->cycle == 181)
+		if (arena->cycle == 5000)
 		 	break ;
 		++arena->cycle;
 		ft_printf("It is now cycle %d\n", arena->cycle);

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/03/06 22:48:07 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 16:04:11 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void    op_live(t_process *process,  t_arena *arena)
 		ptr = ptr + 1 - arena->arena < MEM_SIZE ? ptr + 1 : arena->arena; 
 	}
 	i = -1;
+	ft_printf("p %d | live %d\n", process->process_num, player_num);	
 	while (++i < arena->num_players)
 		if (arena->players[i].player_num == player_num)
 		{
@@ -36,5 +37,4 @@ void    op_live(t_process *process,  t_arena *arena)
 				arena->players[i].player_num, arena->players[i].name);
 		}
 	process->num_live++;
-	ft_printf("p %d | live %d\n", process->process_num, player_num);	
 }
