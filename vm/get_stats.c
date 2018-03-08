@@ -32,7 +32,7 @@ void			get_player_name(char *cont, char *name)
 
 	y = 0;
 	i = sizeof(COREWAR_EXEC_MAGIC);
-	while (i < PROG_NAME_LENGTH && cont[i] != '\0')
+	while (i < PROG_NAME_LENGTH)
 	{
 		name[y] = cont[i];
 		y++;

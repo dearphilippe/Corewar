@@ -16,7 +16,7 @@ void	print_player_stats(t_arena *arena)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	printf("Introducing contenstants...\n");
 	while (i <= 2)
 	{

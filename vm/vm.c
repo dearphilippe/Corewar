@@ -35,10 +35,10 @@ t_process *p)
 	unsigned char	str[4];
 
 	i = 0;
-	while (++i + (arena->last_alive) < argc)
+	while (++i < argc)
 	{
-		fd = open(argv[i + arena->last_alive], O_RDONLY);
-		get_player_stats(&arena->players[i], fd, argv[i + arena->last_alive]);
+		fd = open(argv[i], O_RDONLY);
+		get_player_stats(&arena->players[i], fd, argv[i]);
 		lseek(fd, PROG_NAME_LENGTH + COMMENT_LENGTH + 16, SEEK_SET);
 		k = 0;
 		while (read(fd, str, 1) > 0)
@@ -82,7 +82,7 @@ int				main(int argc, char **argv)
 
 	if (flag_check(argc, argv, &arena))
 	{
-		arena.num_players = argc - arena.last_alive;
+		arena.num_players = argc;
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
 		ft_bzero(arena.arena, MEM_SIZE);
 		init_players(&arena, players);
