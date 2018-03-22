@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 07:29:24 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/22 10:42:37 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,18 @@ void			start_game(t_arena *arena)
 		++arena->cycle;
 		if ((VERB_2 & arena->flag) == 4)
 			ft_printf("It is now cycle %d\n", arena->cycle);
+		/*
+		** -dump flag
+		*/
 		if ((MEM_DUMP & arena->flag) == MEM_DUMP &&
 		arena->cycle >= arena->mem_dump)
 		{
 			print_arena(arena);
 			exit(0);
 		}
+		/*
+		** -s flag
+		*/
 		if (((MEM_CYCLES & arena->flag) == MEM_CYCLES) &&
 			(arena->cycle % arena->cycles == 0))
 		{

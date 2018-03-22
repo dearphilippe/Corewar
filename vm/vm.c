@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 07:21:59 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/22 10:34:03 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_process *p)
 	arena->last_alive = 0;
 }
 
-static void		init_players(t_arena *arena, t_process *players)
+static void		init_players(t_arena *arena, t_process *players, int *player_nums)
 {
 	int			i;
 	int			k;
@@ -63,7 +63,11 @@ static void		init_players(t_arena *arena, t_process *players)
 	while (++i < arena->num_players)
 	{
 		arena->players[i].num_of_process = 1;
-		arena->players[i].player_num = -(i + 1);
+		/*
+		** Setting the player number either index or specified by commandline
+		*/
+		arena->players[i].player_num = player_nums[i] ? player_nums[i] : i;
+		// arena->players[i].player_num = -(i + 1);
 		players[i].player_num = i;
 		*((int *)((players[i]).regs[0])) = -(i + 1);
 		k = 0;
@@ -79,13 +83,14 @@ int				main(int argc, char **argv)
 {
 	t_process	*players;
 	t_arena		arena;
+	int			*player_nums;
 
-	if (flag_check(argc, argv, &arena))
+	if (player_nums = flag_check(argc, argv, &arena))
 	{
 		arena.num_players = argc;
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
 		ft_bzero(arena.arena, MEM_SIZE);
-		init_players(&arena, players);
+		init_players(&arena, players, player_nums);
 		create_arena(argc, argv, &arena, players);
 		get_inital_instructs(players, &arena);
 		start_game(&arena);

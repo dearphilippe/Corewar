@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 23:13:38 by sbalcort          #+#    #+#             */
-/*   Updated: 2018/03/08 07:48:59 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/22 10:42:36 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,16 @@ int    flags(int argc, char **argv, t_arena *arena)
     return (i);
 }
 
-int     flag_check(int argc, char **argv, t_arena *arena)
+int     *flag_check(int argc, char **argv, t_arena *arena)
 {
     int     len;
     int     i;
     int     off_set;
+    int     *player_nums;
+    /**
+     * set player_nums with respective players. or 0 if not specified. return player_nums on success, Null on fail
+     * -dump 
+     * **/
 
     i = 1;
     off_set = 0;
