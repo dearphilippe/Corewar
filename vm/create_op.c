@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create_op.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 18:20:58 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/19 11:10:37 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include <stdio.h>
 
 static int		param_size(char coding_byte, int truncate)
 {

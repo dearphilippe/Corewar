@@ -6,7 +6,7 @@
 /*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/02/18 20:09:55 by passef           ###   ########.fr       */
+/*   Updated: 2018/02/18 20:57:56 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int         get_data(t_process *proc, t_arena *arena)
 {
     if (proc->instruct.op_code == 1)
         op_live(proc, arena);
+    if (proc->instruct.op_code == 2)
+        op_load(proc,arena);
 }
 
 int       get_player_id(int player_num, t_arena *arena)
@@ -46,4 +48,9 @@ void    op_live(t_process *proc, t_arena *arena)
     proc->num_live++;
     arena->last_alive = proc->player_num;
     print_player_alive(player_id, arena);
+}
+
+void    op_load(t_process *proc, t_arena *arena)
+{
+    
 }

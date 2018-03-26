@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 22:56:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 16:36:42 by satkins          ###   ########.fr       */
+/*   Updated: 2018/02/18 20:12:20 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void				process_execution(t_arena *arena, t_process *process)
 
 	if (get_instruct(&(process->pc), arena->arena, &instruct))
 	{
-		//execute!! PHILL THIS IS UR MOMENT DONT LET US ALL DOWN
-		;
+		get_data(&process, &arena);
 	}
 	process->execute_cycle = get_exec_cycle(process->pc) + arena->cycle + 1;
 	ft_enpqueue(arena->proc_queue, process, sizeof(t_process), comparison);
