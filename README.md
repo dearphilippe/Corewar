@@ -1,1 +1,1 @@
-corewar
+Corewar
