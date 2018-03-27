@@ -12,14 +12,14 @@
 
 #include "parameters.h"
 
-int (*get_value[4])(int num, t_process *proc, t_arena *arena) = {
+int		(*get_value[4])(int num, t_process *proc, t_arena *arena) = {
 	NULL,
 	get_reg_val,
 	get_dir_val,
 	get_ind_val
-	};
+};
 
-int					*read_param(t_process *proc, t_arena *arena)
+int			*read_param(t_process *proc, t_arena *arena)
 {
 	int				*ret;
 	unsigned char	*addr;
@@ -45,7 +45,7 @@ int					*read_param(t_process *proc, t_arena *arena)
 		if (proc->instruct.p_s[k] == 2 && (ret[k] & 0x8000))
 			ret[k] = (ret[k] | 0xFFFF0000);
 		hold = (proc->instruct.coding_byte >> ((3 - k) * 2)) & 0x3;
-		ret[k] = get_value[hold] (ret[k], proc, arena);
+		ret[k] = get_value[hold](ret[k], proc, arena);
 	}
 	return (ret);
 }

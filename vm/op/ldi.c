@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 21:25:18 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 20:03:35 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 02:15:32 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void				ldi(t_arena *arena, t_process *process)
 		free(params);
 		return ;
 	}
-	dist = params[0] + params[1];
+	dist = (params[0] + params[1]) % IDX_MOD;
 	addr = process->instruct.pc;
 	i = -1;
 	while (++i < abs(dist))
@@ -51,9 +51,9 @@ void				ldi(t_arena *arena, t_process *process)
 			addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
 		else
 			addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;
-	if((VERB_4 & arena->flag) == 8)
-		ft_printf("P% 5d | ldi %d %d r%d\n", process->process_num, params[0],
-		params[1], *process->instruct.param[2]);
+	ft_printf("P %4d | ldi %d %d r%d\n", process->process_num, params[0], params[1], *process->instruct.param[2]);
+	ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", params[0]
+		, params[1], params[0] + params[1], dist + process->instruct.pc - arena->arena);
 	free(params);
 	read_mem(arena, process, addr);
 }

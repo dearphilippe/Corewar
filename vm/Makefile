@@ -39,19 +39,20 @@ SRC += get_stats.c
 SRC += player_stats.c
 SRC += print_game_info.c
 
+
 LIBFT = ../libstar/libft.a
 
 RM = rm -Rf
 
-$(NAME):
-	$(CC) -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(SRC_MOAR) $(LIBFT)
-
 all: $(NAME)
+
+$(NAME):
+	$(CC) -o $(NAME) $(FLAGS) -I$(INC) -I ../libstar/ftprintf $(SRC) $(LIBFT)
 
 clean:
 	$(RM) $(NAME)
 
 debug: clean
-	$(CC) -g -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(SRC_MOAR) $(LIBFT)
+	$(CC) -g -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(LIBFT) -fsanitize=address
 
 re: clean all

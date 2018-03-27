@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-int get_ind_val(int num, t_process *proc, t_arena *arena)
+int			get_ind_val(int num, t_process *proc, t_arena *arena)
 {
 	unsigned char	*ptr;
 	int				ret;
@@ -26,7 +26,8 @@ int get_ind_val(int num, t_process *proc, t_arena *arena)
 		if (num > 0)
 			ptr = ptr + 1 - arena->arena < MEM_SIZE ? ptr + 1 : arena->arena;
 		else
-			ptr = ptr - 1 >= arena->arena ? ptr - 1 : arena->arena + MEM_SIZE - 1;
+			ptr = ptr - 1 >= arena->arena ? ptr - 1 : arena->arena +
+			MEM_SIZE - 1;
 	ret = 0;
 	i = -1;
 	while (++i < REG_SIZE)

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 22:56:48 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:45:46 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_process *p)
 	int				fd;
 	unsigned char	str[4];
 
-	i = 0;
+	i = arena->file_offset;
 	while (++i < argc)
 	{
 		fd = open(argv[i], O_RDONLY);
@@ -46,9 +46,8 @@ t_process *p)
 			*(p[i].pc + (k)) = *str;
 			++k;
 		}
-		close(fd);
 	}
-	arena->num_processes = arena->num_players;
+	arena->num_processes = arena->num_players + 1;
 	arena->proc_queue = init_pqueue();
 	arena->last_alive = 0;
 }
@@ -69,10 +68,27 @@ static void		init_players(t_arena *arena, t_process *players)
 		k = 0;
 		while (++k < REG_NUMBER)
 			*((int *)((players[i]).regs[k])) = 0;
-		players[i].process_num = i;
+		players[i].process_num = i + 1;
 		arena->players[i].player_id = i;
 		players[i].pc = (i * (MEM_SIZE / arena->num_players)) + arena->arena;
 	}
+}
+
+int				get_count(int argc, char **argv)
+{
+	int i;
+
+	i = 1;
+	while (i < argc)
+	{
+		if (argv[i][0] == '-')
+			i++;
+		else if (ft_isdigit(argv[i][0]))
+			i++;
+		else
+			break;
+	}
+	return (i);
 }
 
 int				main(int argc, char **argv)
@@ -81,20 +97,12 @@ int				main(int argc, char **argv)
 	t_arena		arena;
 	int			i;
 
-	i = flag_check(argc, argv, &arena);
-	if (i >= 0)
-	{
-		arena.num_players = argc - i;
-		players = ft_memalloc(sizeof(t_process) * arena.num_players);
-		ft_bzero(arena.arena, MEM_SIZE);
-		init_players(&arena, players);
-		create_arena(argc, argv, &arena, players);
-		get_inital_instructs(players, &arena);
-		//print_arena(&arena);
-		// ft_printf("start cycle %d %d\n",((t_process *)arena.proc_queue->first->content)->execute_cycle, ((t_process *)arena.proc_queue->first->next->content)->execute_cycle);
-		start_game(&arena);
-		//print_arena(&arena);
-	}
-	else
-		print_starting_info();
+	arena.num_players = argc;
+	players = ft_memalloc(sizeof(t_process) * arena.num_players);
+	ft_bzero(arena.arena, MEM_SIZE);
+	arena.file_offset = (int)get_count(argc, argv);
+	init_players(&arena, players);
+	create_arena(argc, argv, &arena, players);
+	get_inital_instructs(players, &arena);
+	start_game(&arena);
 }

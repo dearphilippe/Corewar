@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 20:16:59 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 09:29:59 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 18:12:24 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	op_and(t_arena *arena, t_process *process)
 	process->carry = (params[0] & params[1]) ? 0 : 1;
 	reg = *(process->instruct.param[2]);
 	*(int *)process->regs[reg - 1] = (params[0] & params[1]);
-	if((VERB_4 & arena->flag) == 8)
-		ft_printf("P% 5d | and %d %d r%d\n", process->process_num, params[0], params[1], reg);
+	ft_printf("P %4d | and %d %d r%d\n", process->process_num, params[0], params[1], reg);
 	free(params);
 }

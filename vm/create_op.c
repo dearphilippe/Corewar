@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/07 15:29:06 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 00:19:15 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static int	advance_pc(unsigned char coding_byte, unsigned char op_code,
 	i = -1;
 	while (++i < num_param)
 	{
-		if (((coding_byte >> (6 - i * 2)) & 0xFF) == T_DIR)
+		if (((coding_byte >> (6 - i * 2)) & 0x3) == DIR_CODE)
 			len += op_tab[op_code - 1].tr ? 2 : DIR_SIZE;
-		if (((coding_byte >> (6 - i * 2)) & 0xFF) == T_IND)
+		if (((coding_byte >> (6 - i * 2)) & 0x3) == IND_CODE)
 			len += IND_SIZE;
-		if (((coding_byte >> (6 - i * 2)) & 0xFF) == T_REG)
+		if (((coding_byte >> (6 - i * 2)) & 0x3) == REG_CODE)
 			len += 1;
 	}
 	i = -1;
@@ -67,11 +67,11 @@ static int	p_size(unsigned char coding_byte, int truncate)
 	int		len;
 
 	len = 0;
-	if (((coding_byte)&0x3) == REG_CODE)
+	if (((coding_byte) & 0x3) == REG_CODE)
 		len += 1;
-	else if (((coding_byte)&0x3) == IND_CODE)
+	else if (((coding_byte) & 0x3) == IND_CODE)
 		len += IND_SIZE;
-	else if (((coding_byte)&0x3) == DIR_CODE)
+	else if (((coding_byte) & 0x3) == DIR_CODE)
 		len += truncate ? 2 : DIR_SIZE;
 	return (len);
 }
@@ -83,7 +83,7 @@ static int	p_size(unsigned char coding_byte, int truncate)
 ** params
 */
 
-static int get_len(unsigned char c, t_instruction *instruc,
+static int	get_len(unsigned char c, t_instruction *instruc,
 	unsigned char **pc, unsigned char *arena)
 {
 	int len;
@@ -126,7 +126,7 @@ static int get_len(unsigned char c, t_instruction *instruc,
 ** then pc becomes areana (a)(first address in the mem) else pc++
 */
 
-int get_instruct(unsigned char **pc, unsigned char *a,
+int			get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in)
 {
 	int len;

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 19:30:50 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:24:09 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct		s_process
 	int				process_num;
 	int				player_num;
 	int				num_live;
+	int				last_live;
 	t_instruction	instruct;
 }					t_process;
 
@@ -62,9 +63,9 @@ typedef struct		s_player
 	int				player_num;
 	int				player_id;
 	int				num_of_process;
-	int				player_size;
 	char			name[PROG_NAME_LENGTH + 1];
 	char			comment[COMMENT_LENGTH + 1];
+	int				player_size;
 }					t_player;
 
 typedef struct		s_arena
@@ -81,6 +82,7 @@ typedef struct		s_arena
 	unsigned short	flag;
 	int				mem_dump;
 	int				cycles;
+	int				file_offset;
 }					t_arena;
 
 int					comparison(void *ptr1, void *ptr2);
@@ -95,7 +97,6 @@ void				start_game(t_arena *arena);
 
 int					get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in);
-void				get_player_stats(t_player *player, int fd, char *file);
 
 void				op_control(t_arena *arena, t_process *proc);
 
@@ -107,16 +108,13 @@ void				print_starting_info(void);
 
 int					flag_check(int argc, char **argv, t_arena *arena);
 
+void				op_control(t_arena *arena, t_process *proc);
+
+//void				get_player_stats(t_player *player, int fd);
+
+void				get_player_stats(t_player *player, int fd, char *file);
+
+int					flags(int argc, char **argv, t_arena *arena, int i);
+
 
 #endif
-
-
-/*
-
-begining 
-
-add -d file for dump
-
-add -v for vebose 
-	add verbose to arena struct
-*/

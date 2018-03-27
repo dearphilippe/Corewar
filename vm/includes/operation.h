@@ -20,7 +20,7 @@ void	op_and(t_arena *arena, t_process *process);
 void	zjmp(t_arena *arena, t_process *process);
 void	st(t_arena *arena, t_process *process);
 void	sti(t_arena *arena, t_process *proc);
-void    op_live(t_process *process,  t_arena *arena);
+void    op_live(t_process *process, t_arena *arena);
 void	op_xor(t_arena *arena, t_process *process);
 void	add(t_arena *arena, t_process *process);
 void	ldi(t_arena *arena, t_process *process);

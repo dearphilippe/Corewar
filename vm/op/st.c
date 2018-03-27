@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 21:50:29 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/06 20:03:40 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 19:04:57 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,29 @@ void				st(t_arena *arena, t_process *process)
 		return ;
 	}
 	if (process->instruct.p_s[1] == 1)
-		*(int *)process->regs[*process->instruct.param[1] - 1] = *(int *)process->regs[*process->instruct.param[0] - 1];
+		*(int *)process->regs[*process->instruct.param[1] - 1] =
+		*(int *)process->regs[*process->instruct.param[0] - 1];
 	else
 	{
 		addr = process->instruct.pc;
 		dist = read_mem(arena, process, process->instruct.param[1]);
+		ft_printf("P %4d | st r%d %d\n", process->process_num,
+		*process->instruct.param[0], dist);
 		i = -1;
 		while (++i < abs(dist % IDX_MOD))
 			if (dist > 0)
-				addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
+				addr = addr + 1 - arena->arena < MEM_SIZE ? addr + 1
+				: arena->arena;
 			else
-				addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;	
+				addr = addr - 1 >= arena->arena ? addr - 1
+				: addr + MEM_SIZE - 1;
 		i = -1;
 		while (++i < REG_SIZE)
 		{
 			*addr = params[0] >> (24 - (i * 8));
-			addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1 : arena->arena;
+			addr = addr + 1  - arena->arena < MEM_SIZE ? addr + 1
+			: arena->arena;
 		}
 	}
-	if ((VERB_4 & arena->flag) == 8)
-		ft_printf("P% 5d | st r%d %d\n", process->process_num,
-		*process->instruct.param[0], dist);
 	free(params);
 }

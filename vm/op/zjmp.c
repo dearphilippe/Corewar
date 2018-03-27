@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 22:12:05 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/07 11:56:15 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 19:07:29 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,5 @@ void				zjmp(t_arena *arena, t_process *process)
 				addr = addr - 1 >= arena->arena ? addr - 1 : addr + MEM_SIZE - 1;
 		process->pc = addr;
 	}
-	if ((VERB_4 & arena->flag) == 8)
-		ft_printf("P% 5d | zjmp %d %s\n", process->process_num, numbr,
-		process->carry ? "OK" : "FAIL");
+	ft_printf("P %4d | zjmp %d %s\n", process->process_num, numbr, process->carry ? "OK" : "FAILED");
 }

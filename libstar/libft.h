@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:23:57 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/04 22:04:28 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:04:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <fcntl.h>
-
+# include "ftprintf/ftprintf.h"
 # define ABS(X) X > 0 ? X : -X 
 
 typedef struct		s_list

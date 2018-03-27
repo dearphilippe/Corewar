@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 22:56:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/07 11:52:19 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/07 23:09:50 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,4 @@ void				process_execution(t_arena *arena, t_process *process)
 	process->instruct.op_code = *process->pc;
 	ft_enpqueue(arena->proc_queue, process, sizeof(t_process), comparison);
 	free(process);
-	// ft_printf("Cycle: %d\n", arena->cycle);
-	// print_arena(arena);
-	// sleep(1);
 }

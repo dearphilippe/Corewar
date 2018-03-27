@@ -6,11 +6,27 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 16:46:56 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/07 15:49:38 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:44:33 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+static void		print_winner(t_arena *arena)
+{
+	int			i;
+
+	i = -1;
+	while (++i < arena->num_players)
+	{
+		if (arena->players[i].player_num == arena->last_alive)
+		{
+			ft_printf("Contestant %d, \"%s\", has won !\n", arena->last_alive,
+			arena->players[i].name);
+			break ;
+		}
+	}
+}
 
 /*
 ** count_live will count the total number of lives called in this cycle
@@ -36,9 +52,8 @@ static int		count_live(t_arena *arena)
 		live_count += proc->num_live;
 		if (!proc->num_live || arena->cycle_to_die <= 0)
 		{
-			if ((VERB_8 & arena->flag) == 16)
-				ft_printf("Process %d hasn't lived for %d cycles\n",
-			proc->process_num, arena->cycle_to_die);
+			ft_printf("Process %d hasn't lived for %d cycles\n",
+				proc->process_num, arena->cycle - proc->last_live);
 			if (prev)
 				prev->next = node->next;
 			else
@@ -88,8 +103,6 @@ void			start_game(t_arena *arena)
 		}
 		if (arena->cycle >= arena->next_check)
 			die_check(arena);
-		if (arena->cycle == 5000)
-			break ;
 		++arena->cycle;
 		if ((VERB_2 & arena->flag) == 4)
 			ft_printf("It is now cycle %d\n", arena->cycle);
@@ -99,11 +112,12 @@ void			start_game(t_arena *arena)
 			print_arena(arena);
 			exit(0);
 		}
-		if (((MEM_CYCLES & arena->flag) == MEM_CYCLES) && (arena->cycle % arena->cycles == 0))
+		if (((MEM_CYCLES & arena->flag) == MEM_CYCLES) &&
+		(arena->cycle % arena->cycles == 0))
 		{
 			print_arena(arena);
 			sleep(SLEEP_TIME);
 		}
 	}
-	print_results(arena);
+	print_winner(arena);
 }

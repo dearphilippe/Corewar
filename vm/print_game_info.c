@@ -93,7 +93,7 @@ int				flag_check(int argc, char **argv, t_arena *arena)
 
 	i = 1;
 	off_set = 0;
-	if (argc > 0)
+	if (argc > 1)
 	{
 		if (argc > 2)
 			off_set = flags(argc, argv, arena, 0);

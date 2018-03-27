@@ -61,10 +61,6 @@ typedef char	t_arg_type;
 # define T_IND					4
 # define T_LAB					8
 
-/*
-**
-*/
-
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
@@ -73,21 +69,21 @@ typedef struct		header_s
 {
 	unsigned int		magic;
 	char				prog_name[PROG_NAME_LENGTH + 1];
-	unsigned int		prog_size;
+	unsigned int		prog_sizes;
 	char				comment[COMMENT_LENGTH + 1];
 }					header_t;
 
 typedef struct	s_op
 {
-	char		op[ MAX_OPNAME ];
+	char		op[MAX_OPNAME];
 	int			num_param;
-	int			param_type[ MAX_PARAM ];
+	int			param_type[MAX_PARAM];
 	int			op_code;
 	int			num_cycles;
-	char		comment[ COMMENT_LENGTH ];
+	char		comment[COMMENT_LENGTH];
 	int			coding_byte : 1;
 	int			tr : 1;
-}               t_op;
+}				t_op;
 
 extern t_op    op_tab[17];
 

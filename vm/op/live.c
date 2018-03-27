@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 16:59:40 by passef            #+#    #+#             */
-/*   Updated: 2018/03/06 22:48:07 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:43:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ void    op_live(t_process *process,  t_arena *arena)
 		ptr = ptr + 1 - arena->arena < MEM_SIZE ? ptr + 1 : arena->arena; 
 	}
 	i = -1;
+	ft_printf("P %4d | live %d\n", process->process_num, player_num);	
 	while (++i < arena->num_players)
 		if (arena->players[i].player_num == player_num)
 		{
 			arena->last_alive = player_num;
-//			ft_printf("\nFLAG == %u\tVERB_1 == %u\t %u\n",arena->flag, VERB_1 ,(VERB_1 & arena->flag));
-			if ((VERB_1 & arena->flag ) == 2)
-				ft_printf("A process shows that player %d \"%s\" is alive\n",
-			arena->players[i].player_num, arena->players[i].name);
+			ft_printf("Player %d (%s) is said to be alive\n",
+				arena->players[i].player_num * -1, arena->players[i].name);
 		}
 	process->num_live++;
-	if((VERB_4 & arena->flag) == 8)
-		ft_printf("P% 5d | live %d\n", process->process_num, player_num);
+	process->last_live = arena->cycle;
 }
