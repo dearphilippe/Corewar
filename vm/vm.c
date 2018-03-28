@@ -26,6 +26,18 @@ static void			get_inital_instructs(t_process *p, t_arena *arena)
 	free(p);
 }
 
+int					core_file(char *name)
+{
+	int len;
+
+	len = ft_strlen(name);
+	if (len < 4)
+		return (0);
+	if (!ft_strcmp(&name[len - 4], ".cor"))
+		return (1);
+	return (0);
+}
+
 static void			create_arena(int argc, char **argv, t_arena *arena,
 t_process *p)
 {
@@ -34,9 +46,11 @@ t_process *p)
 	int				fd;
 	unsigned char	str[4];
 
-	i = 0;
+	i = flag_count(argc, argv);
 	while (++i < argc)
 	{
+		if (!core_file(argv[i]))
+			continue;
 		fd = open(argv[i], O_RDONLY);
 		get_player_stats(&arena->players[i], fd, argv[i]);
 		lseek(fd, PROG_NAME_LENGTH + COMMENT_LENGTH + 16, SEEK_SET);
@@ -53,7 +67,12 @@ t_process *p)
 	arena->last_alive = 0;
 }
 
-static void		init_players(t_arena *arena, t_process *players, int *player_nums)
+/*
+**Starting from the first .cor file on command line
+**
+*/
+
+static void		init_players(t_arena *arena, t_process *players)
 {
 	int			i;
 	int			k;
@@ -66,8 +85,9 @@ static void		init_players(t_arena *arena, t_process *players, int *player_nums)
 		/*
 		** Setting the player number either index or specified by commandline
 		*/
-		arena->players[i].player_num = player_nums[i] ? player_nums[i] : i;
-		// arena->players[i].player_num = -(i + 1);
+		//(player_nums[i] > 0) ? (arena->players[i + set + 1].label = player_nums[i]) : (arena->players[i + set + 1].label = i + set);
+		//arena->players[i].player_num = player_nums[i] ? player_nums[i] : i;
+		 //arena->players[i].player_num = -(i + 1);
 		players[i].player_num = i;
 		*((int *)((players[i]).regs[0])) = -(i + 1);
 		k = 0;
@@ -83,18 +103,18 @@ int				main(int argc, char **argv)
 {
 	t_process	*players;
 	t_arena		arena;
-	int			*player_nums;
-
-	if (player_nums = flag_check(argc, argv, &arena))
+	
+	if (flag_check(argc, argv, &arena))
 	{
-		arena.num_players = argc;
+		arena.num_players = argc; // count .cor files ?
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
 		ft_bzero(arena.arena, MEM_SIZE);
-		init_players(&arena, players, player_nums);
+		init_players(&arena, players);
 		create_arena(argc, argv, &arena, players);
 		get_inital_instructs(players, &arena);
-		start_game(&arena);
+		start_game(argc, argv, &arena);
 	}
 	else
 		print_starting_info();
+	return (0);
 }

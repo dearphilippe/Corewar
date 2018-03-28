@@ -12,15 +12,18 @@
 
 #include "vm.h"
 
-void	print_player_stats(t_arena *arena)
+void	print_player_stats(int argc, char **argv, t_arena *arena)
 {
 	int	i;
-
-	i = 1;
-	printf("Introducing contenstants...\n");
-	while (i <= 2)
+	int player_count;
+	
+	i = flag_count(argc, argv);
+	player_count = arena->num_players - i;
+	ft_printf("Introducing contenstants...\n");
+	//i = 0;
+	while (i <= player_count)
 	{
-		printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\")\n", i,
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\")\n", arena->players[i].player_num,
 		arena->players[i].player_size, arena->players[i].name,
 		arena->players[i].comment);
 		i++;
@@ -29,12 +32,10 @@ void	print_player_stats(t_arena *arena)
 
 void	print_results(t_arena *arena)
 {
-	if (arena->last_alive > 0)
-	{
-		ft_printf("Contestant %d, \"%s\" has won! Glory\n", arena->last_alive,
-		arena->players[arena->last_alive - 1].name);
+
+		ft_printf("Contestant %d, \"%s\" has won! Glory\n",
+		arena->players[arena->last_alive].player_num,
+		arena->players[arena->last_alive].name);
+		int i = -1;
 		ft_printf("Cycle finished at: %d\n", arena->cycle);
-	}
-	else
-		ft_printf("Sorry there was no winner");
 }
