@@ -82,37 +82,77 @@ static void		init_players(t_arena *arena, t_process *players)
 	while (++i < arena->num_players)
 	{
 		arena->players[i].num_of_process = 1;
-		/*
-		** Setting the player number either index or specified by commandline
-		*/
-		//(player_nums[i] > 0) ? (arena->players[i + set + 1].label = player_nums[i]) : (arena->players[i + set + 1].label = i + set);
-		//arena->players[i].player_num = player_nums[i] ? player_nums[i] : i;
-		 //arena->players[i].player_num = -(i + 1);
 		players[i].player_num = i;
 		*((int *)((players[i]).regs[0])) = -(i + 1);
 		k = 0;
 		while (++k < REG_NUMBER)
 			*((int *)((players[i]).regs[k])) = 0;
-		players[i].process_num = i + 1;
+		//players[i].process_num = i + 1;
 		arena->players[i].player_id = i;
 		players[i].pc = (i * (MEM_SIZE / arena->num_players)) + arena->arena;
 	}
+}
+
+t_env			*init_env(int count, char **input)
+{
+	t_env	*temp;
+	int		index;
+
+	index = flag_count(count, input);
+	temp = (t_env*)ft_memalloc(sizeof(t_env));
+	return (temp);
+}
+
+void			curate_input(t_env *env)
+{
+	int		word_count;
+	t_env	*temp;
+	int 	index;
+
+	index = 1;
+	word_count = 0;
+	temp = env;
+	while (temp)		//counts up the number of nodes
+	{
+		word_count++;
+		if (temp->next == NULL)
+			break ;
+		temp = temp->next;
+	}
+	word_count++;
+	//allocates memory for each word/node in 2d char array
+	env->list = (char**)malloc(sizeof(char*) * (word_count + 1));
+	env->list[word_count] = NULL;
+	temp = env;
+	env->list[0] = ft_strdup("");
+	while (index < word_count)
+	{
+		env->list[index] = ft_strdup(temp->player_string);
+		temp = temp->next;
+		index++;
+	}
+	env->list_count = index;
 }
 
 int				main(int argc, char **argv)
 {
 	t_process	*players;
 	t_arena		arena;
+	t_env		*env;
 	
-	if (flag_check(argc, argv, &arena))
+	env = init_env(argc, argv);
+	if (flag_check(argc, argv, &arena, env))
 	{
-		arena.num_players = argc; // count .cor files ?
+		curate_input(env);
+		PRINT_ENV(env);				//remove when done
+		//arena.num_players = argc; 			//original
+		arena.num_players = env->list_count;	//new
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
 		ft_bzero(arena.arena, MEM_SIZE);
 		init_players(&arena, players);
-		create_arena(argc, argv, &arena, players);
+		create_arena(env->list_count, env->list, &arena, players);
 		get_inital_instructs(players, &arena);
-		start_game(argc, argv, &arena);
+		start_game(env->list_count, env->list, &arena, env);
 	}
 	else
 		print_starting_info();

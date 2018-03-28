@@ -30,12 +30,41 @@ void	print_player_stats(int argc, char **argv, t_arena *arena)
 	}
 }
 
-void	print_results(t_arena *arena)
+//FOR TESTING
+void			PRINT_ENV(t_env *env)
 {
+	int		index;
+	t_env	*temp;
 
+	index = 0;
+	temp = env;
+	while (env)
+	{
+		ft_printf(" NODE\tPlayer file: %s\tPlayer assigned number: %d\tplayer index: %d\n\n", temp->player_string, temp->assign_number, temp->input_index);
+		ft_printf("ENV\tindex: %d\tSTRING: %s\n\n", index, env->list[index]);
+		index++;
+		if (temp->next != NULL)
+			temp = temp->next;
+		else
+			break ;
+	}
+	ft_printf("argument count = %d\n", env->list_count);
+}
+
+void	print_results(t_arena *arena, t_env *env)
+{
+	int index;
+
+	ft_printf("last alive: %d\n", arena->last_alive);
+	index = 0;
+	PRINT_ENV(env);				//remove when done
+	while (index < 20)
+	{
 		ft_printf("Contestant %d, \"%s\" has won! Glory\n",
-		arena->players[arena->last_alive].player_num,
-		arena->players[arena->last_alive].name);
-		int i = -1;
-		ft_printf("Cycle finished at: %d\n", arena->cycle);
+		arena->players[index].player_num,
+		//arena->players[arena->last_alive].player_num,
+		arena->players[index].name);
+		index++;
+	}
+	ft_printf("Cycle finished at: %d\n", arena->cycle);
 }

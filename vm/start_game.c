@@ -73,7 +73,7 @@ static void		die_check(t_arena *arena)
 	arena->next_check = arena->cycle + arena->cycle_to_die;
 }
 
-void			start_game(int argc, char **argv, t_arena *arena)
+void			start_game(int argc, char **argv, t_arena *arena, t_env *env)
 {
 	t_process	*process;
 
@@ -118,5 +118,5 @@ void			start_game(int argc, char **argv, t_arena *arena)
 		++arena->cycle;
 		
 	}
-	print_results(arena);
+	print_results(arena, env);
 }

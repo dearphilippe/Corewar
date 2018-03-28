@@ -129,7 +129,7 @@ int     flag_count(int argc, char **argv)
 **if one or both flags exist, the index is incremented
 */
 
-int     player_number_check(char **argv, int i, int offset)
+int     player_number_check(char **argv, int i, int offset, t_env *env)
 {
 	int     count;
 
@@ -142,6 +142,7 @@ int     player_number_check(char **argv, int i, int offset)
 		i++;
 		if (get_number(argv[i + offset]) > 0)
 		{
+			env->assign_number = get_number(argv[i + offset]);
 			count++;
 		}
 		else
@@ -150,18 +151,31 @@ int     player_number_check(char **argv, int i, int offset)
 	return (count);
 }
 
-int     file_check(char **argv, int i, int offset)
+int     file_check(char **argv, int i, int offset, t_env *env)
 {
 	int len;
 
 	len = ft_strlen(argv[i + offset]);
 	if (ft_strcmp(&argv[i + offset][len - 4], ".cor"))
 		print_starting_info();
+	env->player_string = ft_strdup(argv[i + offset]);
+	env->input_index = offset + i;
 	return (1);
 }
 
+t_env	*append_node_env(t_env *env)
+{
+	if(env->player_string != NULL)
+	{
+		env->next = (t_env*)ft_memalloc(sizeof(t_env));
+		env->next->last = env->next;
+		return ((t_env*)env->next);
+	}
+	return (env);
+}
 
-int     flag_check(int argc, char **argv, t_arena *arena)
+
+int     flag_check(int argc, char **argv, t_arena *arena, t_env *env)
 {
 	int     len;
 	int     i;
@@ -175,8 +189,9 @@ int     flag_check(int argc, char **argv, t_arena *arena)
 			off_set = flags(argc, &argv[i], arena);
 		while ((i + off_set) < argc)
 		{
-			i += player_number_check(argv, i, off_set);
-			i += file_check(argv, i, off_set);
+			env = append_node_env(env);
+			i += player_number_check(argv, i, off_set, env);
+			i += file_check(argv, i, off_set, env);
 		}
 	}
 	else

@@ -87,8 +87,19 @@ typedef struct		s_arena
 	unsigned short	flag;
 	int				mem_dump;
 	int				cycles;
-	int				user_assign_number[4];
 }					t_arena;
+
+typedef struct		s_env
+{
+	char			**list;
+	int				list_count;
+
+	char			*player_string;
+	int				assign_number;
+	int				input_index;
+	struct s_env	*next;
+	struct s_env	*last;
+}					t_env;
 
 int					comparison(void *ptr1, void *ptr2);
 
@@ -98,7 +109,7 @@ int					get_exec_cycle(unsigned char *pc);
 
 void				print_arena(t_arena *arena);
 
-void				start_game(int argc, char **argv, t_arena *arena);
+void				start_game(int argc, char **argv, t_arena *arena, t_env *env);
 
 int					get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in);
@@ -108,15 +119,15 @@ void				op_control(t_arena *arena, t_process *proc);
 
 void				print_player_stats(int argc, char **argv, t_arena *arena);
 
-void				print_results(t_arena *arena);
+void				print_results(t_arena *arena, t_env *env);
 
 void				print_starting_info(void);
 
-int					flag_check(int argc, char **argv, t_arena *arena);
+int					flag_check(int argc, char **argv, t_arena *arena, t_env *env);
 
 int     			flag_count(int argc, char **argv);
 
-
+void				PRINT_ENV(t_env *env);
 #endif
 
 /*
