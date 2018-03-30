@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
+/*   By: passef <passef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 06:24:09 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/27 15:19:19 by passef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct		s_arena
 }					t_arena;
 
 int					comparison(void *ptr1, void *ptr2);
-
+		
 void				process_execution(t_arena *arena, t_process *process);
 
 int					get_exec_cycle(unsigned char *pc);
@@ -101,7 +101,7 @@ int					get_instruct(unsigned char **pc, unsigned char *a,
 void				op_control(t_arena *arena, t_process *proc);
 
 void				print_player_stats(t_arena *arena);
-
+ 
 void				print_results(t_arena *arena);
 
 void				print_starting_info(void);
