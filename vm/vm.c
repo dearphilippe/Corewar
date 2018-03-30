@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/22 10:34:03 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/30 11:37:38 by sbalcort         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ t_process *p)
 	int				fd;
 	unsigned char	str[4];
 
-	i = flag_count(argc, argv);
+	i = -1;
 	while (++i < argc)
 	{
-		if (!core_file(argv[i]))
-			continue;
+		// if (!core_file(argv[i]))
+		// 	continue;
 		fd = open(argv[i], O_RDONLY);
 		get_player_stats(&arena->players[i], fd, argv[i]);
 		lseek(fd, PROG_NAME_LENGTH + COMMENT_LENGTH + 16, SEEK_SET);
@@ -87,7 +87,7 @@ static void		init_players(t_arena *arena, t_process *players)
 		k = 0;
 		while (++k < REG_NUMBER)
 			*((int *)((players[i]).regs[k])) = 0;
-		//players[i].process_num = i + 1;
+		players[i].process_num = i + 1;
 		arena->players[i].player_id = i;
 		players[i].pc = (i * (MEM_SIZE / arena->num_players)) + arena->arena;
 	}
@@ -109,7 +109,7 @@ void			curate_input(t_env *env)
 	t_env	*temp;
 	int 	index;
 
-	index = 1;
+	index = 0;
 	word_count = 0;
 	temp = env;
 	while (temp)		//counts up the number of nodes
@@ -119,12 +119,12 @@ void			curate_input(t_env *env)
 			break ;
 		temp = temp->next;
 	}
-	word_count++;
+	if (word_count > MAX_PLAYERS)
+		print_starting_info();
 	//allocates memory for each word/node in 2d char array
 	env->list = (char**)malloc(sizeof(char*) * (word_count + 1));
 	env->list[word_count] = NULL;
 	temp = env;
-	env->list[0] = ft_strdup("");
 	while (index < word_count)
 	{
 		env->list[index] = ft_strdup(temp->player_string);
@@ -144,7 +144,6 @@ int				main(int argc, char **argv)
 	if (flag_check(argc, argv, &arena, env))
 	{
 		curate_input(env);
-		PRINT_ENV(env);				//remove when done
 		//arena.num_players = argc; 			//original
 		arena.num_players = env->list_count;	//new
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
@@ -158,3 +157,27 @@ int				main(int argc, char **argv)
 		print_starting_info();
 	return (0);
 }
+
+/*
+ * There was an initial problem in indexing and how the vm declared a winner.
+ * So, I jimmied the input for the VM
+ * from:										to:
+ * 	./corewar -s 10 -n 5 ex.cor 42.cor				ex.cor 42.cor
+ *
+ * 	because the vm took no consideration for any number of possible flags, there was an indexing issue.
+ *
+ * 	Everything else works properly with one exeption
+ * 		Beacuse the vm was meant to work as "./corewar ex.cor 42.cor
+ *
+ * 	It made a false player/process for	argv[0]={"./corewar"}	that was ignored
+ * 	and spacing on the player field took argv[0] into account. making for an empty player 1
+ * 	with the real player one being in the center of the playing field
+ *
+ * 	THE NEW VM INPUT
+ * 		now gets only the player file name and the player number. either user assigned or ARGC assigned.
+ *
+ * 	HOWEVER
+ * 		player zeros processes are not ending and leading to an infinite loop (beacuse before, its was a dummy filler for argv[0]).
+ *		
+ *		when that is fixed this project will be finished.
+ */

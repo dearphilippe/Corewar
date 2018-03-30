@@ -14,7 +14,7 @@
 
 void			print_starting_info(void)
 {
-	ft_printf("\nUsage: ./corewar [-d N -s N -v N | -b --stealth | -n --stealth] [-a] <champion1.cor> <...>\n\
+	ft_printf("\nUsage: ./corewar [-d N -s N -v N [[-n N ] <champion1.cor>] <...>\n\
 #### TEXT OUTPUT MODE ##########################################################\n\
 \t-d N\t: Dumps memory after N cycles then exits\n\
 \t-s N\t: Runs N cycles, dumps memory, pauses, then repeats\n\

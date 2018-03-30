@@ -117,7 +117,7 @@ void				get_player_stats(t_player *player, int fd, char *file);
 
 void				op_control(t_arena *arena, t_process *proc);
 
-void				print_player_stats(int argc, char **argv, t_arena *arena);
+void				print_player_stats(int argc, char **argv, t_arena *arena, t_env *env);
 
 void				print_results(t_arena *arena, t_env *env);
 

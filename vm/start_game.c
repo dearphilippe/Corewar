@@ -80,7 +80,7 @@ void			start_game(int argc, char **argv, t_arena *arena, t_env *env)
 	arena->cycle = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;
 	arena->next_check = CYCLE_TO_DIE;
-	print_player_stats(argc, argv, arena);
+	print_player_stats(argc, argv, arena, env);
 	while (arena->proc_queue->first)
 	{
 		process = arena->proc_queue->first->content;

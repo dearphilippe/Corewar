@@ -45,6 +45,7 @@ RM = rm -Rf
 
 $(NAME):
 	$(CC) -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(SRC_MOAR) $(LIBFT)
+	@cat ../clap_for_me.txt
 
 all: $(NAME)
 
