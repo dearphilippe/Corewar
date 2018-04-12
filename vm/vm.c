@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/30 11:37:38 by sbalcort         ###   ########.fr       */
+/*   Updated: 2018/04/11 22:05:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_process *p)
 **
 */
 
-static void		init_players(t_arena *arena, t_process *players)
+static void		init_players(t_arena *arena, t_process *players, t_env *env)
 {
 	int			i;
 	int			k;
@@ -82,8 +82,8 @@ static void		init_players(t_arena *arena, t_process *players)
 	while (++i < arena->num_players)
 	{
 		arena->players[i].num_of_process = 1;
-		players[i].player_num = i;
-		*((int *)((players[i]).regs[0])) = -(i + 1);
+		players[i].player_num = env->assign_number;
+		*((int *)((players[i]).regs[0])) = env->assign_number;
 		k = 0;
 		while (++k < REG_NUMBER)
 			*((int *)((players[i]).regs[k])) = 0;
@@ -145,10 +145,11 @@ int				main(int argc, char **argv)
 	{
 		curate_input(env);
 		//arena.num_players = argc; 			//original
+		ft_printf("list count %d\n", env->list_count);
 		arena.num_players = env->list_count;	//new
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
 		ft_bzero(arena.arena, MEM_SIZE);
-		init_players(&arena, players);
+		init_players(&arena, players, env);
 		create_arena(env->list_count, env->list, &arena, players);
 		get_inital_instructs(players, &arena);
 		start_game(env->list_count, env->list, &arena, env);

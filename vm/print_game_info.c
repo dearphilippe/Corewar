@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 23:13:38 by sbalcort          #+#    #+#             */
-/*   Updated: 2018/03/22 10:42:36 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/11 22:15:16 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ int    flags(int argc, char **argv, t_arena *arena)
 	i = 0;
 	arena->flag = 0;
 	number = 0;
-	while (i < argc && ft_strchr(FLAGS, argv[i][0]))
+	while (i < argc && argv[i][0] == '-')
 	{
 		if (ft_strncmp(VERBOSE_FLAG, argv[i], ft_strlen(VERBOSE_FLAG)) == 0)
 		{
 			arena->flag |= VEBOSE;
 			i++;
-			(get_number(argv[i]) > -1) ? number = get_number(argv[i]): print_starting_info();
+			if ((number = get_number(argv[i])) == -1)
+				print_starting_info();
 			(number & 16) == 16 ? arena->flag |= VERB_16 : 0;
 			(number & 16) == 16 ? number |= VERB_16 : 0;
 			
@@ -96,8 +97,9 @@ int    flags(int argc, char **argv, t_arena *arena)
 		{
 			arena->flag |= MEM_CYCLES;
 			i++;
-			arena->cycles = get_number(argv[i]);
-			(arena->cycles == -1) ? arena->cycles = 0 : i++;
+			arena->cycles = ft_atoi(argv[i]);
+			if (arena->cycles)
+				i++;
 //            ft_printf("cycle: %d, %u", arena->cycles, arena->flag & MEM_CYCLES);
 		}
 		else 
@@ -136,18 +138,12 @@ int     player_number_check(char **argv, int i, int offset, t_env *env)
 	count = 0;
 	if (ft_strcmp(PLAYER_NUMBER, argv[i + offset]))
 		return (0);
-	if (!ft_strcmp(PLAYER_NUMBER, argv[i + offset]))
-	{
+	count++;
+	i++;
+	if ((env->assign_number = ft_atoi(argv[i + offset])))
 		count++;
-		i++;
-		if (get_number(argv[i + offset]) > 0)
-		{
-			env->assign_number = get_number(argv[i + offset]);
-			count++;
-		}
-		else
-			print_starting_info();
-	}
+	else
+		print_starting_info();
 	return (count);
 }
 
