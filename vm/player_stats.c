@@ -38,3 +38,19 @@ void	print_results(t_arena *arena)
 	else
 		ft_printf("Sorry there was no winner");
 }
+
+int		*flag_check(int argc, char **argv, t_arena *arena)
+{
+	int	*player_nums;
+	int	i;
+
+	player_nums = NULL;
+	if (argc == 1)
+		return (NULL);
+	i = 1;
+	while (i < argc)
+	{
+		
+		i++;
+	}
+}
