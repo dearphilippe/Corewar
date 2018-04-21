@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 23:23:57 by nkouris           #+#    #+#             */
-/*   Updated: 2018/02/18 18:48:26 by satkins          ###   ########.fr       */
+/*   Updated: 2018/03/08 06:04:38 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 # include <string.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include "ftprintf/ftprintf.h"
+# define ABS(X) X > 0 ? X : -X 
+
+typedef struct		s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_list;
 
 typedef struct		s_dblist
 {
@@ -125,7 +134,17 @@ void				*pqueue_find(t_pqueue *queue, void *trgt,
 void				*ft_depqueue(t_pqueue *queue);
 void				ft_enpqueue(t_pqueue *queue, void *content, size_t c_size,
 	int (*comparer)(void *, void *));
-t_pqueue			*init_pqueue(void);
 void				del_node(t_node *node, t_node *prev);
-	
+int					ft_printf(const char *format, ...);
+
+/*
+**Sams shit queue headers are as follows
+*/
+
+t_pqueue			*init_pqueue(void);
+void                ft_enpqueue(t_pqueue *queue, void *content, size_t c_size, int (*comparer)(void *, void *));
+void                *ft_depqueue(t_pqueue *queue);
+void                *pqueue_find(t_pqueue *queue, void *trgt, int (*equality)(void *, void *));
+void                del_pqueue(t_pqueue *queue, void (*deconstruct)(void *ptr));
+
 #endif

@@ -6,86 +6,151 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/02/18 18:20:58 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/11 22:21:29 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static int		param_size(char coding_byte, int truncate)
+static int	advance_pc(unsigned char coding_byte, unsigned char op_code,
+	unsigned char **pc, unsigned char *arena)
 {
-	int			len;
+	int		num_param;
+	int		len;
+	int		i;
+
+	num_param = op_tab[op_code - 1].num_param;
+	len = 1;
+	i = -1;
+	while (++i < num_param)
+	{
+		if (((coding_byte >> (6 - i * 2)) & 0x3) == DIR_CODE)
+			len += op_tab[op_code - 1].tr ? 2 : DIR_SIZE;
+		if (((coding_byte >> (6 - i * 2)) & 0x3) == IND_CODE)
+			len += IND_SIZE;
+		if (((coding_byte >> (6 - i * 2)) & 0x3) == REG_CODE)
+			len += 1;
+	}
+	i = -1;
+	while (++i < len)
+		*pc = *pc + 1 < arena + MEM_SIZE ? *pc + 1 : arena;
+	return (0);
+}
+
+static int	check_coding_byte(unsigned char coding_byte, t_instruction *instruc)
+{
+	int		i;
+
+	i = MAX_PARAM;
+	coding_byte = coding_byte >> 2;
+	while (--i >= 0)
+	{
+		if ((coding_byte & 0x3) == REG_CODE &&
+			!(op_tab[instruc->op_code - 1].param_type[i] & T_REG))
+			return (0);
+		else if ((coding_byte & 0x3) == DIR_CODE &&
+			!(op_tab[instruc->op_code - 1].param_type[i] & T_DIR))
+			return (0);
+		else if ((coding_byte & 0x3) == IND_CODE &&
+			!(op_tab[instruc->op_code - 1].param_type[i] & T_IND))
+			return (0);
+		else if ((coding_byte & 0x3) == 0 &&
+			op_tab[instruc->op_code - 1].param_type[i] != 0)
+			return (0);
+		coding_byte = coding_byte >> 2;
+	}
+	return (1);
+}
+
+static int	p_size(unsigned char coding_byte, int truncate)
+{
+	int		len;
 
 	len = 0;
-	if ((coding_byte) & 0xFF == REG_CODE)
+	if (((coding_byte)&0x3) == REG_CODE)
 		len += 1;
-	else if ((coding_byte) & 0xFF == IND_CODE)
+	else if (((coding_byte)&0x3) == IND_CODE)
 		len += IND_SIZE;
-	else if ((coding_byte) & 0xFF == DIR_CODE)
+	else if (((coding_byte)&0x3) == DIR_CODE)
 		len += truncate ? 2 : DIR_SIZE;
 	return (len);
 }
 
-static int		get_len(char c, t_instruction *instruc, char **pc, char *arena)
-{
-	int			len;
-	int			i;
+/*
+** get_len will call param size for each of the parameters for the instruct
+** p_size will be passed the corrisponding coding bits for that parameter
+** get_len will increment pc in a circular fashion. incrementing past all
+** params
+*/
 
-	len = 0;
-	len += param_size(c >> 6, op_tab[instruc->op_code].truncate);
-	i = -1;
-	while (++i < len)
+static int	get_len(unsigned char c, t_instruction *instruc,
+	unsigned char **pc, unsigned char *arena)
+{
+	int len[2];
+
+	len[0] = 0;
+	instruc->p_s[0] = p_size(c >> 6, op_tab[instruc->op_code - 1].tr);
+	len[0] += instruc->p_s[0];
+	len[1] = -1;
+	while (++len[1] < len[0])
 		*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
-	if (op_tab[instruc->op_code].num_param > 1)
+	if (op_tab[instruc->op_code - 1].num_param > 1)
 	{
 		instruc->param[1] = *pc;
-		len += param_size(c >> 4, op_tab[instruc->op_code].truncate);
-		while (++i < len)
-				*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
-		if (op_tab[instruc->op_code].num_param > 2)
+		instruc->p_s[1] = p_size(c >> 4, op_tab[instruc->op_code - 1].tr);
+		len[0] += instruc->p_s[1];
+		while (++len[1] < len[0] + 1)
+			*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
+		if (op_tab[instruc->op_code - 1].num_param > 2)
 		{
-			instruc->param[1] = *pc;
-			len += param_size(c >> 2, op_tab[instruc->op_code].truncate);
-			while (++i < len)
+			instruc->param[2] = *pc;
+			instruc->p_s[2] = p_size(c >> 2, op_tab[instruc->op_code - 1].tr);
+			len[0] += instruc->p_s[2];
+			while (++len[1] < len[0] + 2)
 				*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
 		}
 	}
-	return (len + 2);
+	return (len[0] + 2);
 }
 
 /*
 ** Returns the Len of the instruction at PC. 0 if not an instruction
+** This validation of instruction includes checking op_code & checking ACB
 ** Also will create an instruction to be passed to the executioner
 ** Also increments the Program Counter for the passed in Process
 ** PC is a pointer passed by reference so that it can be modified
-** PC is incremented in a way to mimick cirular memory. See line 74
+** PC is incremented in a way to mimick cirular memory. See line 120
+** line 120 explained:
+** if pc+1 is larger than arena(address of the start of the shared mem)+memsize
+** then pc becomes areana (a)(first address in the mem) else pc++
 */
 
-int				get_instruct(char **pc, char *arena, t_instruction *instruc)
+int	get_instruct(unsigned char **pc, unsigned char *a,
+	t_instruction *in)
 {
-	char		coding_byte;
-	int			len;
+	int len;
 
 	len = 0;
-	if (**pc && **pc <= 16)
+	if (in->op_code > 0 && in->op_code <= 16)
 	{
-		instruc->pc = *pc;
-		instruc->op_code = **pc;
-		*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
-		if (!op_tab[instruc->op_code].coding_byte)
+		in->pc = *pc;
+		*pc = (*pc + 1 - a < MEM_SIZE) ? *pc + 1 : a;
+		if (!op_tab[in->op_code - 1].coding_byte)
 		{
-			instruc->param[0] = *pc;
-			len = op_tab[instruc->op_code].truncate ? 2 : DIR_SIZE;
+			in->param[0] = *pc;
+			len = op_tab[in->op_code - 1].tr ? 2 : DIR_SIZE;
 			while (--len >= 0)
-				*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
-			return (op_tab[instruc->op_code].truncate ? 3 : DIR_SIZE + 1);
+				*pc = (*pc + 1 - a < MEM_SIZE) ? *pc + 1 : a;
+			return (op_tab[in->op_code - 1].tr ? 3 : DIR_SIZE + 1);
 		}
-		coding_byte = **pc;
-		*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
-		instruc->param[0] = *pc;
-		len = get_len(coding_byte, instruc, pc, arena);
+		in->coding_byte = **pc;
+		if (!check_coding_byte(in->coding_byte, in))
+			return (advance_pc(in->coding_byte, in->op_code, pc, a));
+		*pc = (*pc + 1 - a < MEM_SIZE) ? *pc + 1 : a;
+		in->param[0] = *pc;
+		len = get_len(in->coding_byte, in, pc, a);
 	}
 	else
-		*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;		
-	return (len);	
+		*pc = (*pc + 1 - a < MEM_SIZE) ? *pc + 1 : a;
+	return (len);
 }
