@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:26 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 07:21:15 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/10 08:49:16 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct		s_arena
 	int				num_processes;
 	unsigned char	arena[MEM_SIZE];
 	unsigned short	flag;
-	int				mem_dump;
+	uint8_t			options;
 	int				cycles;
 }					t_arena;
 

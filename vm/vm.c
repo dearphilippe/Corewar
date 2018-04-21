@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 21:49:11 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/22 10:34:03 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/10 08:31:37 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int				main(int argc, char **argv)
 	t_arena		arena;
 	int			*player_nums;
 
-	if (player_nums = flag_check(argc, argv, &arena))
+	if ((player_nums = flag_check(argc, argv, &arena)))
 	{
 		arena.num_players = argc;
 		players = ft_memalloc(sizeof(t_process) * arena.num_players);
