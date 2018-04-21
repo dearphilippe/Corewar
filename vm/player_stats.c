@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 21:59:12 by sbalcort          #+#    #+#             */
-/*   Updated: 2018/03/08 07:22:59 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/21 12:28:29 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,4 @@ void	print_results(t_arena *arena, t_env *env)
 	arena->players[arena->last_alive].name);
 	ft_printf("Cycle finished at: %d\n", arena->cycle);
 	//free_env(env);	//need to make
-}
-
-int		*flag_check(int argc, char **argv, t_arena *arena)
-{
-	int	*player_nums;
-	int	i;
-
-	player_nums = NULL;
-	if (argc == 1)
-		return (NULL);
-	i = 1;
-	while (i < argc)
-	{
-		
-		i++;
-	}
 }
