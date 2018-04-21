@@ -73,26 +73,20 @@ static void		die_check(t_arena *arena)
 	arena->next_check = arena->cycle + arena->cycle_to_die;
 }
 
-void			start_game(t_arena *arena)
+void			start_game(int argc, char **argv, t_arena *arena, t_env *env)
 {
 	t_process	*process;
 
 	arena->cycle = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;
 	arena->next_check = CYCLE_TO_DIE;
-	print_player_stats(arena);
+	print_player_stats(argc, argv, arena, env);
 	while (arena->proc_queue->first)
 	{
 		process = arena->proc_queue->first->content;
-		while (process->execute_cycle == arena->cycle)
-		{
-			ft_depqueue(arena->proc_queue);
-			process_execution(arena, process);
-			process = arena->proc_queue->first->content;
-		}
-		if (arena->cycle >= arena->next_check)
-			die_check(arena);
-		++arena->cycle;
+		/*
+		**-v verbose
+		*/
 		if ((VERB_2 & arena->flag) == 4)
 			ft_printf("It is now cycle %d\n", arena->cycle);
 		/*
@@ -113,6 +107,16 @@ void			start_game(t_arena *arena)
 			print_arena(arena);
 			sleep(SLEEP_TIME);
 		}
+		while (process->execute_cycle == arena->cycle)
+		{
+			ft_depqueue(arena->proc_queue);
+			process_execution(arena, process);
+			process = arena->proc_queue->first->content;
+		}
+		if (arena->cycle >= arena->next_check)
+			die_check(arena);
+		++arena->cycle;
+		
 	}
-	print_results(arena);
+	print_results(arena, env);
 }

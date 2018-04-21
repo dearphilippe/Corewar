@@ -51,6 +51,9 @@ all: $(NAME)
 clean:
 	$(RM) $(NAME)
 
+fclean: clean
+	$(RM) $(NAME).dSYM
+
 debug: clean
 	$(CC) -g -o$(NAME) $(FLAGS) -I$(INC) $(SRC) $(SRC_MOAR) $(LIBFT)
 

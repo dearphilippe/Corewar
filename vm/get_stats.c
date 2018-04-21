@@ -12,6 +12,13 @@
 
 #include "vm.h"
 
+/*
+**void	read_file_error(int i, int fd, char *file)
+**
+**prints out errors according to the defined error codes
+**for PLAYER_TOO)_BIG, fd is highjacked to sore player size to be printed out
+*/
+
 void			read_file_error(int i, int fd, char *file)
 {
 	if (i == OPEN_FILE_ERR)
@@ -20,6 +27,8 @@ void			read_file_error(int i, int fd, char *file)
 		ft_printf("Improper file size: %s\n", file);
 	if (i == MISSING_MAGIC)
 		ft_printf("Magic Number missing %s\n", file);
+	if (i == PLAYER_TOO_BIG)
+		ft_printf("Error: File %s has too large a code (%d bytes > %d bytes)", file, fd, CHAMP_MAX_SIZE);
 	if (fd > -1)
 		close(fd);
 	exit(1);
@@ -57,6 +66,13 @@ void			get_player_comment(char *content, char *comment)
 	comment[y] = '\0';
 }
 
+/*
+**unsigned int	get_magic(char *str, int count)
+**
+**obrtains the magic number from the beginning of each 
+**.cor file 
+*/
+
 unsigned int	get_magic(char *str, int count)
 {
 	int				i;
@@ -73,6 +89,14 @@ unsigned int	get_magic(char *str, int count)
 	return (number);
 }
 
+/*
+**void	get_player_stats(t_player *player, int fd, char *file)
+**
+**This covers all possible erros with reading the player files
+**i.e. Permissions, has contents, has magic #, player/file size
+**not too big
+*/
+
 void			get_player_stats(t_player *player, int fd, char *file)
 {
 	int		i;
@@ -88,5 +112,7 @@ void			get_player_stats(t_player *player, int fd, char *file)
 	get_player_name(content, player->name);
 	player->player_size = get_magic(&content[sizeof(COREWAR_EXEC_MAGIC)
 	+ PROG_NAME_LENGTH], 7);
+	if (player->player_size > CHAMP_MAX_SIZE)
+		read_file_error(PLAYER_TOO_BIG, player->player_size, file);
 	get_player_comment(content, player->comment);
 }

@@ -6,7 +6,7 @@
 /*   By: satkins <satkins@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 19:26:00 by satkins           #+#    #+#             */
-/*   Updated: 2018/03/08 00:19:15 by satkins          ###   ########.fr       */
+/*   Updated: 2018/04/11 22:21:29 by satkins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,35 +83,34 @@ static int	p_size(unsigned char coding_byte, int truncate)
 ** params
 */
 
-static int get_len(unsigned char c, t_instruction *instruc,
+static int	get_len(unsigned char c, t_instruction *instruc,
 	unsigned char **pc, unsigned char *arena)
 {
-	int len;
-	int i;
+	int len[2];
 
-	len = 0;
+	len[0] = 0;
 	instruc->p_s[0] = p_size(c >> 6, op_tab[instruc->op_code - 1].tr);
-	len += instruc->p_s[0];
-	i = -1;
-	while (++i < len)
+	len[0] += instruc->p_s[0];
+	len[1] = -1;
+	while (++len[1] < len[0])
 		*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
 	if (op_tab[instruc->op_code - 1].num_param > 1)
 	{
 		instruc->param[1] = *pc;
 		instruc->p_s[1] = p_size(c >> 4, op_tab[instruc->op_code - 1].tr);
-		len += instruc->p_s[1];
-		while (++i < len + 1)
+		len[0] += instruc->p_s[1];
+		while (++len[1] < len[0] + 1)
 			*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
 		if (op_tab[instruc->op_code - 1].num_param > 2)
 		{
 			instruc->param[2] = *pc;
 			instruc->p_s[2] = p_size(c >> 2, op_tab[instruc->op_code - 1].tr);
-			len += instruc->p_s[2];
-			while (++i < len + 2)
+			len[0] += instruc->p_s[2];
+			while (++len[1] < len[0] + 2)
 				*pc = (*pc + 1 - arena < MEM_SIZE) ? *pc + 1 : arena;
 		}
 	}
-	return (len + 2);
+	return (len[0] + 2);
 }
 
 /*
@@ -126,7 +125,7 @@ static int get_len(unsigned char c, t_instruction *instruc,
 ** then pc becomes areana (a)(first address in the mem) else pc++
 */
 
-int get_instruct(unsigned char **pc, unsigned char *a,
+int	get_instruct(unsigned char **pc, unsigned char *a,
 	t_instruction *in)
 {
 	int len;

@@ -19,6 +19,7 @@ void			print_arena(t_arena *arena)
 	t_process		*proc;
 
 	i = -1;
+	write(1, "\f", 1);
 	while (++i < MEM_SIZE)
 	{
 		if ( i && i % 64 == 0)
