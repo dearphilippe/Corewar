@@ -16,3 +16,4 @@ subject/\._corewar\.pdf
 *.o
 *.swp
 *.a
+tags
