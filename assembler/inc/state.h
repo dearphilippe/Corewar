@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:56:30 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/27 17:59:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:22:33 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 #define KEY "live ld st add sub and or xor zjmp ldi sti fork lld lldi lfork aff"
 #define L_STR label->str_label
 #define L_LOC label->loc_label
+# define TO_UPPER(x) (x ^ 0x20)
+# define TO_LOWER(x) (x | 0x20)
+# define IS_DIGIT(x) (x >= 48 && x <= 57)
+# define IS_PRINT(x) (x >= 32 && x<= 126)
+# define IS_ALPHA(x) ((x >= 65 && x <= 90) || (x >= 97 && x <= 122))
+# define IS_ALNUM(x) (IS_DIGIT(x) || IS_ALPHA(x))
+# define IS_WHSPC(x) (x == 32 || x == 10 || x == 11 || x == 9 || x == 12)
+# define IS_ASCII(x) (x >= 0 && x <= 127)
 
 typedef enum	e_instruct
 {
@@ -42,6 +50,7 @@ typedef struct		s_buffers
 	unsigned char	*storhead_cor;
 	unsigned char	*storprog_cor;
 	char			*sfile;
+	char			*stor_sfile;
 	t_list			*instructions;
 	t_list			*labels;
 	char			*col;
@@ -87,7 +96,7 @@ void	instr_paramsplit(t_ininit *handler, t_buffers *cor, char **sfile);
 
 char	*delimiter_assoc(t_ininit *handler, char **sfile, t_buffers *cor);
 void	instr_labels(t_ininit *handler, char **sfile, int i);
-void	instr_assoc(t_buffers *cor, t_ininit *handler);
+void	instr_assoc(t_buffers *cor, t_ininit *handler, int i);
 
 /* subsequent calls */
 void	handle_dir(t_buffers *cor, t_ininit *handlers, int i);

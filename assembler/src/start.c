@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 13:27:53 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/27 14:25:13 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 10:42:57 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ char	*read_sfile(char **argv)
 
 	if (!(str = (char *)ft_strnew(MEM_SIZE)))
 		exit (1);
-	fd = open(argv[1], O_RDONLY);
+	if ((fd = open(argv[1], O_RDONLY)) < 0)
+		return (NULL);
 	read(fd, str, MEM_SIZE);
 	if (read(fd, str, 1) > 0)
-		exit (1);
-	terminus = ft_strnchr(str, '\n');
-	*terminus = '\0';
+	{
+		ft_printf("Champion is too heavy at weigh in.  Reduce byte size\n");
+		return (NULL);
+	}
 	return (str);
 }
 
@@ -48,7 +50,11 @@ int		main(int argc, char **argv)
 
 	if (argc == 1)
 		usage_warning();
-	sfile = read_sfile(argv);
+	if (!(sfile = read_sfile(argv)))
+	{
+		printexit();
+		return (-1);
+	}
 	init_passes(sfile);
 	printf("done!\n");
 	return (0);

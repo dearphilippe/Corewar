@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 13:46:30 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/27 14:23:47 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:14:15 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 void		genop(char **sfile, t_buffers *cor, t_ininit *handler)
 {
 	handler->params = op_tab[(handler->op - 1)].num_param;
-	cor->prog_len++;
-	/* handle some other initialization properties */
+	cor->prog_len++; /* opcode byte count increase */
+	handler->opbyte = op_tab[(handler->op - 1)].coding_byte;
+	/* handle some other initialization properties on second pass */
 	if (!cor->pass)
 	{
-		while (ft_isalpha(**sfile))
-		(*sfile)++;
+		while (IS_ALPHA(**sfile))
+			(*sfile)++;
 		handler->opbyte = 0;
 	}
 	/* find, classify the parameters, and then store, pointer moved to end */

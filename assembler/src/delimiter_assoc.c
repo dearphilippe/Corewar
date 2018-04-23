@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 16:14:00 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/27 16:16:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 14:40:52 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@
 char	*delimiter_assoc(t_ininit *handler, char **sfile, t_buffers *cor)
 {
 	char	*delim;
-	int		params;
 
-	handler ? (params = handler->params) : (params = 0);
 	delim = *sfile;
 	while (*delim)
 	{
 		if (*delim == SEPARATOR_CHAR
 			|| *delim == COMMENT_CHAR
-			|| *delim == LABEL_CHAR
-			|| *delim == SEPARATOR_CHAR
-			|| ft_isspace(*delim))
+			|| (*delim == LABEL_CHAR && delim != *sfile)
+			|| *delim == ' '
+			|| *delim == '\t')
 			return (delim);
 		else if (*delim == '\n')
 		{

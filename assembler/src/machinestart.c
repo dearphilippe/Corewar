@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/03 13:59:08 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/27 18:03:35 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 16:46:53 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	build_prog(t_buffers *cor)
 		*cor->prog_cor++ = DATA->op;
 		if (DATA->opbyte)
 			*cor->prog_cor++ = DATA->opbyte;
-		instr_assoc(cor, DATA);
+		instr_assoc(cor, DATA, i);
 		instr = instr->next;
+		i++;
 	}
 }

@@ -1,0 +1,53 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/1aef85b/
+ASMOPS_H	src/ops/asmops.h	/^#define ASMOPS_H$/;"	d
+DATA	src/machinestart.c	/^#define DATA /;"	d	file:
+build_header	src/takeline.c	/^void	build_header(char *sfile, unsigned char **head_cor, int prog_len)$/;"	f	typeref:typename:void
+build_prog	src/machinestart.c	/^void	build_prog(t_buffers *cor)$/;"	f	typeref:typename:void
+bytetrans	src/handlers.c	/^static void	bytetrans(int *param, t_buffers *cor, int len)$/;"	f	typeref:typename:void	file:
+delimiter_assoc	src/delimiter_assoc.c	/^char	*delimiter_assoc(t_ininit *handler, char **sfile, t_buffers *cor)$/;"	f	typeref:typename:char *
+dircode_err	src/instr_paramsplit.c	/^static void	dircode_err(char *sfile, int trans)$/;"	f	typeref:typename:void	file:
+ft_add	src/ops/ft_add.c	/^void	ft_add(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_aff	src/ops/ft_aff.c	/^void	ft_aff(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_and	src/ops/ft_and.c	/^void	ft_and(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_fork	src/ops/ft_fork.c	/^void	ft_fork(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_ld	src/ops/ft_ld.c	/^void	ft_ld(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_ldi	src/ops/ft_ldi.c	/^void	ft_ldi(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_lfork	src/ops/ft_lfork.c	/^void	ft_lfork(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_live	src/ops/live/ft_live.c	/^void	ft_live(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_lld	src/ops/ft_lld.c	/^void	ft_lld(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_lldi	src/ops/ft_lldi.c	/^void	ft_lldi(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_or	src/ops/ft_or.c	/^void	ft_or(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_st	src/ops/ft_st.c	/^void	ft_st(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_sti	src/ops/ft_sti.c	/^void	ft_sti(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_sub	src/ops/ft_sub.c	/^void	ft_sub(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_xor	src/ops/ft_xor.c	/^void	ft_xor(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+ft_zjmp	src/ops/ft_zjmp.c	/^void	ft_zjmp(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void
+genop	src/ops/gen_ops.c	/^void		genop(char **sfile, t_buffers *cor, t_ininit *handler)$/;"	f	typeref:typename:void
+handle_dir	src/handlers.c	/^void	handle_dir(t_buffers *cor, t_ininit *handler, int i)$/;"	f	typeref:typename:void
+handle_ind	src/handlers.c	/^void	handle_ind(t_buffers *cor, t_ininit *handler, int i)$/;"	f	typeref:typename:void
+head_err	src/tokenizer.c	/^static void	head_err(char **strp1, t_buffers *cor)$/;"	f	typeref:typename:void	file:
+idparam	src/instr_paramsplit.c	/^static void	idparam(t_ininit *handler, t_buffers *cor, char **sfile, int i)$/;"	f	typeref:typename:void	file:
+init_passes	src/takeline.c	/^void	init_passes(char *sfile)$/;"	f	typeref:typename:void
+instr_assoc	src/instr_assoc.c	/^void	instr_assoc(t_buffers *cor, t_ininit *handler)$/;"	f	typeref:typename:void
+instr_labels	src/instr_labels.c	/^void	instr_labels(t_ininit *handler, char **sfile, int i)$/;"	f	typeref:typename:void
+instr_paramsplit	src/instr_paramsplit.c	/^void		instr_paramsplit(t_ininit *handler, t_buffers *cor, char **sfile)$/;"	f	typeref:typename:void
+label	src/tokenizer.c	/^static void	label(char **sfile, t_buffers *cor)$/;"	f	typeref:typename:void	file:
+label_err	src/tokenizer.c	/^static void	label_err(t_label *label, char *end)$/;"	f	typeref:typename:void	file:
+magictobyte	src/takeline.c	/^void	magictobyte(unsigned char **head_cor)$/;"	f	typeref:typename:void
+main	src/start.c	/^int		main(int argc, char **argv)$/;"	f	typeref:typename:int
+op_tab	src/op.c	/^t_op op_tab[17] =$/;"	v	typeref:typename:t_op[17]
+ops	src/tokenizer.c	/^static void	(*ops[])(char **, t_buffers *) = {$/;"	v	typeref:typename:void (* [])(char **,t_buffers *)	file:
+param_err	src/instr_paramsplit.c	/^static void	param_err(t_ininit *handler, int i)$/;"	f	typeref:typename:void	file:
+printexit	src/start.c	/^void	printexit(void)$/;"	f	typeref:typename:void
+progsizetobyte	src/takeline.c	/^void	progsizetobyte(unsigned char **head_cor, int *prog_len)$/;"	f	typeref:typename:void
+read_sfile	src/start.c	/^char	*read_sfile(char **argv)$/;"	f	typeref:typename:char *
+remove_comment	src/remove_comment.c	/^int		remove_comment(char **strp1, t_buffers *cor)$/;"	f	typeref:typename:int
+tokenize	src/tokenizer.c	/^void		tokenize(t_buffers *cor)$/;"	f	typeref:typename:void
+usage_warning	src/start.c	/^static void	usage_warning(void)$/;"	f	typeref:typename:void	file:
+write_bytes	src/takeline.c	/^void	write_bytes(t_buffers *cor)$/;"	f	typeref:typename:void

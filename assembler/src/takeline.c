@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 13:59:25 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/27 13:58:36 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 16:44:13 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	progsizetobyte(unsigned char **head_cor, int *prog_len)
 	unsigned char	*transfer;
 
 	transfer = (unsigned char *)prog_len;
-	i = 2;
+	i = 4;
 	while (i--)
 	{
 		printf("progsize byte: %x\n", transfer[i]);
@@ -48,9 +48,10 @@ void	build_header(char *sfile, unsigned char **head_cor, int prog_len)
 	char			*nend;
 	char			*comment;
 	char			*cend;
-	int				pads;
+	int				bytes_written;
 
-	printf("build header\n");
+	ft_printf("build header\n");
+	ft_printf("file buffer is \n<%s>\n", sfile);
 	/* Build magic num */
 	magictobyte(head_cor);
 	/* Build name */
@@ -58,11 +59,12 @@ void	build_header(char *sfile, unsigned char **head_cor, int prog_len)
 	printf("name: %s\n", name);
 	name = ft_strchr(name, '"') + 1;
 	nend = ft_strchr(name, '"');
+	bytes_written = (nend - name);
+	ft_printf("byte written : %d\n", bytes_written);
 	printf("nend: %s\n", nend);
 	while (name != nend)
 		 *(*head_cor)++ = *(unsigned char *)(name++);
-	pads = (nend - name);
-	while (pads++ <= ((PROG_NAME_LENGTH + 1) - (nend - name)))
+	while (bytes_written++ < (PROG_NAME_LENGTH + 4))
 		*(*head_cor)++ = '\0';
 	/* Build progsize num */
 	progsizetobyte(head_cor, &prog_len);
@@ -70,10 +72,10 @@ void	build_header(char *sfile, unsigned char **head_cor, int prog_len)
 	comment = (ft_strnstr(sfile, COMMENT_CMD_STRING, sizeof(header_t)) + ft_strlen(NAME_CMD_STRING));
 	comment = ft_strchr(comment, '"') + 1;
 	cend = ft_strchr(comment, '"');
+	bytes_written = (cend - comment);
 	while (comment != cend)
 		*(*head_cor)++ = *(unsigned char *)(comment++);
-	pads = (cend - comment);
-	while (pads++ <= (PROG_NAME_LENGTH + 1))
+	while (bytes_written++ < (COMMENT_LENGTH + 4))
 		*(*head_cor)++ = '\0';
 }
 
@@ -83,8 +85,7 @@ void	write_bytes(t_buffers *cor)
 	int					writefd;
 
 	writefd = open("test.cor", (O_CREAT | O_WRONLY | O_APPEND));
-	while (i < 2201)
-		write(writefd, &(cor->storhead_cor[i++]), 1);
+	write(writefd, cor->storhead_cor, (PROG_NAME_LENGTH + COMMENT_LENGTH + 16));
 	printf("%d\n", cor->prog_len);
 	i = 0;
 	while (i < cor->prog_len)
@@ -99,8 +100,8 @@ void	init_passes(char *sfile)
 	strlen = ft_strlen(sfile);
 	/* build cor buffer struct to pass critical info */
 	if (!(cor = (t_buffers *)ft_memalloc(sizeof(t_buffers)))
-		|| !(cor->prog_cor = (unsigned char *)ft_memalloc(strlen))
-		|| !(cor->head_cor = (unsigned char *)ft_memalloc(sizeof(header_t))))
+		|| !(cor->prog_cor = (unsigned char *)ft_memalloc((CHAMP_MAX_SIZE) + 1))
+		|| !(cor->head_cor = (unsigned char *)ft_memalloc((PROG_NAME_LENGTH + COMMENT_LENGTH + 16))))
 		printexit();
 	cor->storhead_cor = cor->head_cor;
 	cor->storprog_cor = cor->prog_cor;

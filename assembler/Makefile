@@ -1,6 +1,6 @@
 NAME = asm
 STAT = lib/libft.a 
-CFLAGS += -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS += -Wall -Werror -Wextra -g -fsanitize=address
 INCLUDES = -I lib/ -I lib/ft_printf -I src/ -I src/ops -I inc/ 
 CC = gcc
 SRCDIR = src/

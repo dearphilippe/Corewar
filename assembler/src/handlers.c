@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 16:31:22 by nkouris           #+#    #+#             */
-/*   Updated: 2018/03/27 17:24:08 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 12:17:32 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	handle_dir(t_buffers *cor, t_ininit *handler, int i)
 		(handler->trans[i] & T_DIR) ? (cor->prog_len += DIR_SIZE) : 
 			(cor->prog_len += 1);
 	}
+	/* second pass shit */
 	if (cor->pass)
 		bytetrans(&(handler->param[i]), cor, 
 				((handler->param[i] & T_DIR) ? DIR_SIZE : 1));
