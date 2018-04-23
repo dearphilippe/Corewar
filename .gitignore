@@ -14,3 +14,5 @@ subject/\._B-CPE-155_Corewar\.pdf
 subject/\._corewar\.pdf
 .vscode
 *.o
+*.swp
+*.a
