@@ -6,7 +6,7 @@
 /*   By: nkouris <nkouris@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 13:59:25 by nkouris           #+#    #+#             */
-/*   Updated: 2018/04/23 16:44:13 by nkouris          ###   ########.fr       */
+/*   Updated: 2018/04/23 17:07:51 by nkouris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	write_bytes(t_buffers *cor)
 	int i = 0;
 	int					writefd;
 
-	writefd = open("test.cor", (O_CREAT | O_WRONLY | O_APPEND));
+	writefd = open("test.cor", (O_CREAT | O_TRUNC | O_WRONLY), (S_IRUSR | S_IWUSR | S_IXUSR));
 	write(writefd, cor->storhead_cor, (PROG_NAME_LENGTH + COMMENT_LENGTH + 16));
 	printf("%d\n", cor->prog_len);
 	i = 0;
